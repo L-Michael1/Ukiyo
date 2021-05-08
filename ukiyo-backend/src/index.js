@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 
 // Routes
+import userRoute from './routes/user.js '
 
 // Environment variables
 dotenv.config();
@@ -15,6 +16,9 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: '50mb', extended: true }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// Route handlers
+app.use('/user', userRoute);
 
 // Default route handler
 app.get('/', (req, res, next) => {

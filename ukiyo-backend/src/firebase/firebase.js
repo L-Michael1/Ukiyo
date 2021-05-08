@@ -1,5 +1,7 @@
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import firebase from '@firebase/app'
+import '@firebase/auth'
+import dotenv from 'dotenv'
+dotenv.config();
 
 const firebaseConfig = ({
     apiKey: process.env.FIREBASE_API_KEY,
@@ -10,6 +12,6 @@ const firebaseConfig = ({
     appId: process.env.FIREBASE_APP_ID
 })
 
-firebase.initializeApp(firebaseConfig);
+firebase.default.initializeApp(firebaseConfig);
 
 export default firebase;
