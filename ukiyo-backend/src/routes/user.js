@@ -71,4 +71,21 @@ router.delete('/:id', async (req, res, next) => {
     }
 })
 
+// Sign in
+router.post('/signIn', async (req, res, next) => {
+    const { email, password } = req.body;
+    console.log(req.body);
+    try {
+        const response = await auth.signInWithEmailAndPassword(email, password);
+        const uid = response.user.uid;
+        const user = await User.findOne({ uid });
+        if (!user) {
+            return res.status(404).json('User not found');
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(401).json('Unable to login at the moment...try again later');
+    }
+})
+
 export default router;
