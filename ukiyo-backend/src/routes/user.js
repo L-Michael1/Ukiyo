@@ -32,7 +32,7 @@ router.get('/:id', async (req, res, next) => {
         const user = await User.findOne({ uid });
         if (user) {
             const { first_name, last_name, nickname, email } = user;
-            return res.status(200).json({ user: { uid, first_name, last_name, nickname, email } })
+            return res.status(200).json({ user: { uid, first_name, last_name, nickname, email } });
         }
         res.status(404).json('User not found');
     } catch (error) {
@@ -40,5 +40,21 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
+// Update
+
+// Delete
+router.delete('/:id', async (req, res, next) => {
+    const uid = req.params.id;
+    try {
+        const deletedDbUser = await User.findOneAndDelete({ uid });
+        if (deletedDbUser) {
+            const { first_name, last_name, nickname, email } = deletedDbUser;
+            return res.status(200).json({ user: { uid, first_name, last_name, nickname, email } });
+        }
+        res.status(404).json('User not found');
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+})
 
 export default router;
