@@ -41,6 +41,20 @@ router.get('/:id', async (req, res, next) => {
 })
 
 // Update
+router.patch('/:id', async (req, res, next) => {
+    const uid = req.params.id;
+    const updatedUser = req.body;
+    try {
+        const user = await User.findOneAndUpdate({ uid }, updatedUser, { new: true });
+        if (user) {
+            const { first_name, last_name, nickname, email } = user;
+            return res.status(200).json({ user: { uid, first_name, last_name, nickname, email } });
+        }
+        res.status(404).json('User not found');
+    } catch (error) {
+        res.status(400).json(error.message);
+    }
+})
 
 // Delete
 router.delete('/:id', async (req, res, next) => {
