@@ -12,7 +12,7 @@ const App = () => {
 
   const [user, setUser] = useState({
     uid: '',
-    nickname: 'FakeNickName',
+    nickname: '',
     email: ''
   });
 

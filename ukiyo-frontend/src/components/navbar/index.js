@@ -16,13 +16,18 @@ const Navbar = () => {
                         <Logo src={ukiyo} />
                     </Link>
                 </LogoContainer>
+
                 <AuthContainer>
-                    <ButtonLink to='/SignUp'>
-                        <AuthButton variant='contained' color='primary'>Join</AuthButton>
-                    </ButtonLink>
-                    <ButtonLink to='/SignIn'>
-                        <AuthButton variant='contained' color='primary'>Login</AuthButton>
-                    </ButtonLink>
+                    {user.uid !== '' ? <>Signed in</> :
+                        <>
+                            <ButtonLink to='/SignUp'>
+                                <AuthButton variant='contained' color='primary'>Join</AuthButton>
+                            </ButtonLink>
+                            <ButtonLink to='/SignIn'>
+                                <AuthButton variant='contained' color='primary'>Login</AuthButton>
+                            </ButtonLink>
+                        </>}
+
                 </AuthContainer>
             </NavContainer>
         </Fade>
@@ -69,9 +74,11 @@ const ButtonLink = styled(Link)`
 const AuthButton = styled(Button)`
     background-color: #009CDA !important;
     margin: 8px !important;
+    transition: all 0.4s ease 0s !important;
 
     &:hover {
         background-color: #0082b5 !important;
+        transform: translateY(-3px);
     }
 `
 
