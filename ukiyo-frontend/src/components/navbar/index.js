@@ -35,7 +35,6 @@ const Navbar = () => {
                                 <AuthButton variant='contained' color='primary'>Login</AuthButton>
                             </ButtonLink>
                         </>}
-
                 </AuthContainer>
             </NavContainer>
         </Fade>
