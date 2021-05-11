@@ -139,6 +139,7 @@ const StyledPaper = styled(Paper)`
     flex-direction: column;
     align-items: center;
     margin-top: 96px;
+    margin-bottom: 64px;
     padding: 16px;
 `
 
@@ -147,10 +148,6 @@ const FormHeader = styled.h4`
     margin-bottom: -8px;
     font-size: 34px;
     font-weight: 400;
-`
-
-const Logo = styled.img`
-    max-width: 130px;
 `
 
 const Form = styled.form`

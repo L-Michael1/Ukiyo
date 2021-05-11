@@ -114,7 +114,8 @@ const StyledPaper = styled(Paper)`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 128px;
+    margin-top: 96px;
+    margin-bottom: 64px;
     padding: 16px;
 `
 
