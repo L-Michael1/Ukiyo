@@ -42,9 +42,10 @@ const Login = () => {
         <Grow in={true} timeout={{ enter: 1200, exit: 1000 }} >
             <Container maxWidth='xs'>
                 <HeaderLink to='/'>
-                    <Header>
-                        Ukiyo
-                    </Header>
+                    <HeaderContainer>
+                        <Header>Ukiyo </Header>
+                        <p>HOME</p>
+                    </HeaderContainer>
                 </HeaderLink>
                 <StyledPaper elevation={4}>
                     <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#009CDA' }} />
@@ -81,18 +82,24 @@ const HeaderLink = styled(Link)`
     color: #009CDA;
 `
 
-const Header = styled.h3`
-    display: grid;
-    place-items: center;
-    font-size: 48px;
-    margin-top: 48px;
-    margin-bottom: -32px;
+const HeaderContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transition: all 0.5s ease 0s;
 
     &:hover {
         transform: translateY(-5px);
         text-decoration: underline;
+        text-decoration-thickness: 0;
+        text-decoration-style: wavy;
     }
+`
+
+const Header = styled.h3`
+    font-size: 48px;
+    margin-top: 48px;
 `
 
 const StyledPaper = styled(Paper)`
