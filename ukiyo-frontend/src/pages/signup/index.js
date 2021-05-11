@@ -17,6 +17,7 @@ const Login = () => {
         nickname: '',
         email: '',
         password: '',
+        passwordConfirm: '',
     }
 
     const handleSubmit = async (e) => {
@@ -29,6 +30,11 @@ const Login = () => {
 
         if (userInfo.password.length < 6) {
             swal('Error signing up', 'Password must be atleast 6 characters!', 'error')
+            return;
+        }
+
+        if (userInfo.password !== userInfo.passwordConfirm) {
+            swal('Error signing up', 'Passwords do not match!', 'error');
             return;
         }
 
@@ -81,6 +87,9 @@ const Login = () => {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <TextField name='passwordConfirm' type='password' variant='outlined' label='Password Confirmation' fullWidth required onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>
