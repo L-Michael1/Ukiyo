@@ -85,7 +85,8 @@ const Header = styled.h3`
     display: grid;
     place-items: center;
     font-size: 48px;
-    margin-top: 32px;
+    margin-top: 48px;
+    margin-bottom: -32px;
     transition: all 0.5s ease 0s;
 
     &:hover {
