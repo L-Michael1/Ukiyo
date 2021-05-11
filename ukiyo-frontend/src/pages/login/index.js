@@ -11,7 +11,7 @@ import swal from 'sweetalert'
 const Login = () => {
 
     const history = useHistory();
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const initialState = {
         email: '',
@@ -22,8 +22,8 @@ const Login = () => {
         e.preventDefault();
 
         try {
+            // Store user in local storage for a certain amount of time??
             const existingUser = await signIn(userInfo);
-            console.log(existingUser);
             setUser({
                 uid: existingUser.data.uid,
                 nickname: existingUser.data.nickname,
@@ -124,10 +124,6 @@ const SubHeader = styled.h4`
     margin-bottom: -8px;
     font-size: 34px;
     font-weight: 400;
-`
-
-const Logo = styled.img`
-    max-width: 130px;
 `
 
 const Form = styled.form`

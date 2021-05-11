@@ -11,9 +11,8 @@ const Navbar = () => {
     const { user, setUser } = useContext(UserContext);
 
     const handleLogout = () => {
-        // Firebase logout
-        // Set user to NULL;
-        // Clear local storage?
+        // Set user to empty
+        // Clear local storage??
         setUser({
             uid: '',
             nickname: '',
