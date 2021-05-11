@@ -40,11 +40,6 @@ const Navbar = () => {
                             <div></div>
                     }
                 </div>
-                {/* <Link to='/'>
-                    <LogoContainer style={{ marginLeft: '12px' }}>
-                        <SecondaryLogo />
-                    </LogoContainer>
-                </Link> */}
 
                 <Link to='/'>
                     <LogoContainer>

@@ -15,13 +15,16 @@ router.post('/', async (req, res, next) => {
     const { first_name, last_name, nickname, email, password } = req.body;
     try {
         // Create user in Firebase, Firebase auth will check if user exists
+
         const response = await auth.createUserWithEmailAndPassword(email, password);
         const uid = response.user.uid;
         // Create and save user to DB
+
         await User.create({ uid, first_name, last_name, nickname, email, password });
         res.status(200).json({ user: { uid, first_name, last_name, nickname, email } });
     } catch (error) {
-        res.status(412).json(error.message);
+        console.log(error.message)
+        res.status(412).json({ message: error.message });
     }
 })
 

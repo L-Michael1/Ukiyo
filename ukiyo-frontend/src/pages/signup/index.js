@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import { UserContext } from '../../contexts/user-context'
 import { useHistory, Link } from 'react-router-dom'
 import firebase from '../../firebase/firebase'
+import { signUp } from '../../api'
 import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
 import PermContactCalendarOutlinedIcon from '@material-ui/icons/PermContactCalendarOutlined';
 import styled from 'styled-components';
@@ -21,9 +22,8 @@ const Login = () => {
         password: '',
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('signing in')
 
         if (userInfo.nickname.length > 10) {
             swal('Error signing up', 'Profile name has a maximum of 10 characters!', 'error')
@@ -35,13 +35,18 @@ const Login = () => {
             return;
         }
 
-        swal('signing in')
-
-        // Auth
-        // Success => 
-        // history.push('/')
-        // Fail => 
-        // Alert user failed to signup
+        try {
+            const newUser = await signUp(userInfo);
+            setUser({
+                uid: newUser.data.user.uid,
+                nickname: newUser.data.user.nickname,
+                email: newUser.data.user.email,
+            });
+            history.push('/')
+        } catch (error) {
+            swal('Error signing up', 'User already exists!', 'error')
+            console.error(error.message)
+        }
     }
 
     const handleChange = (e) => {
