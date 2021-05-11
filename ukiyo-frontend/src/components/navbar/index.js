@@ -5,19 +5,46 @@ import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
 import { UserContext } from '../../contexts/user-context'
 import ukiyo from '../../assets/ukiyo.png'
 import styled from 'styled-components'
+import swal from 'sweetalert'
 
 const Navbar = () => {
     const { user, setUser } = useContext(UserContext);
 
+    const handleLogout = () => {
+        // Firebase logout
+        // Set user to NULL;
+        // Clear local storage?
+        setUser({
+            uid: '',
+            nickname: '',
+            email: '',
+        });
+
+        swal(`You have logged out`, "Successfully logged out", "success")
+    }
+
     return (
         <Fade in={true} timeout={{ enter: 1200, exit: 1000 }}>
             <NavContainer>
-
-                <Link to='/'>
-                    <LogoContainer style={{ marginLeft: '10px' }}>
+                <div>
+                    {
+                        user.uid !== ''
+                            ?
+                            <SignedInContainer>
+                                <span>Hello,</span>
+                                <UserName>
+                                    {user.nickname}!
+                                </UserName>
+                            </SignedInContainer>
+                            :
+                            <div></div>
+                    }
+                </div>
+                {/* <Link to='/'>
+                    <LogoContainer style={{ marginLeft: '12px' }}>
                         <SecondaryLogo />
                     </LogoContainer>
-                </Link>
+                </Link> */}
 
                 <Link to='/'>
                     <LogoContainer>
@@ -26,7 +53,12 @@ const Navbar = () => {
                 </Link>
 
                 <AuthContainer>
-                    {user.uid !== '' ? <>Signed in</> :
+                    {user.uid !== ''
+                        ?
+                        <SignedInContainer>
+                            <LogoutButton variant='contained' color='secondary' onClick={handleLogout}>LOGOUT</LogoutButton>
+                        </SignedInContainer>
+                        :
                         <>
                             {/* <ButtonLink to='/SignUp'>
                                 <AuthButton variant='contained' color='primary'>Join</AuthButton>
@@ -57,7 +89,7 @@ const LogoContainer = styled.div`
     transition: all 0.4s ease 0s;
 
     &:hover {
-        transform: translateY(-3px);   
+        transform: translateY(-3px);
     }
 `
 
@@ -93,6 +125,27 @@ const AuthButton = styled(Button)`
         background-color: #0082b5 !important;
         transform: translateY(-3px);
     }
+`
+
+const UserName = styled.span`
+    font-size: 16px;
+    font-weight: 600;
+`
+
+const LogoutButton = styled(Button)`
+    padding: 6px 10px !important;
+    transition: all 0.4s ease 0s !important;
+
+    &:hover {
+        background-color: #d10000 !important;
+        transform: translateY(-3px);
+    }
+`
+
+const SignedInContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 export default Navbar

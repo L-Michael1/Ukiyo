@@ -22,9 +22,21 @@ const Login = () => {
     }
 
     const handleSubmit = (e) => {
-        swal('hey')
         e.preventDefault();
-        console.log('logging in')
+        console.log('signing in')
+
+        if (userInfo.nickname.length > 10) {
+            swal('Error signing up', 'Profile name has a maximum of 10 characters!', 'error')
+            return;
+        }
+
+        if (userInfo.password.length < 6) {
+            swal('Error signing up', 'Password must be atleast 6 characters!', 'error')
+            return;
+        }
+
+        swal('signing in')
+
         // Auth
         // Success => 
         // history.push('/')

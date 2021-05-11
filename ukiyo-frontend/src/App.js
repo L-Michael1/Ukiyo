@@ -11,8 +11,8 @@ import SignInPage from './pages/login'
 const App = () => {
 
   const [user, setUser] = useState({
-    uid: '',
-    nickname: '',
+    uid: 'a',
+    nickname: 'Mikodasaas',
     email: ''
   });
 
