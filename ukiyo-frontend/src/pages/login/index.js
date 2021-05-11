@@ -1,12 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { UserContext } from '../../contexts/user-context'
 import { useHistory, Link } from 'react-router-dom'
-import { Container, Grid, Paper, TextField, Button } from '@material-ui/core'
+import firebase from '../../firebase/firebase'
+import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import styled from 'styled-components';
+import swal from 'sweetalert'
+
 
 const Login = () => {
 
     const history = useHistory();
+    const { user, setUser } = useContext(UserContext);
 
     const initialState = {
         email: '',
@@ -14,6 +19,7 @@ const Login = () => {
     }
 
     const handleSubmit = (e) => {
+        swal('hey')
         e.preventDefault();
         console.log('logging in')
         // Auth
@@ -33,35 +39,60 @@ const Login = () => {
     const [userInfo, setUserInfo] = useState(initialState);
 
     return (
-        <Container maxWidth='xs'>
-            <StyledPaper elevation={4}>
-                <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#009CDA' }} />
-                <Header>Sign In</Header>
-                <Form onSubmit={handleSubmit}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={12}>
-                            <TextField name='email' type='email' variant='outlined' label='Email Address' fullWidth required onChange={handleChange} />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>
-                                Login
+        <Grow in={true} timeout={{ enter: 1200, exit: 1000 }} >
+            <Container maxWidth='xs'>
+                <HeaderLink to='/'>
+                    <Header>
+                        Ukiyo
+                    </Header>
+                </HeaderLink>
+                <StyledPaper elevation={4}>
+                    <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#009CDA' }} />
+                    <SubHeader>Sign In</SubHeader>
+                    <Form onSubmit={handleSubmit}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={12}>
+                                <TextField name='email' type='email' variant='outlined' label='Email Address' fullWidth required onChange={handleChange} />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>
+                                    Login
                             </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <StyledLink to='/SignUp'>
-                                Don't have an account? Sign up!
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <StyledLink to='/SignUp'>
+                                    Don't have an account? Sign up!
                             </StyledLink>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Form>
+                    </Form>
 
-            </StyledPaper>
-        </Container>
+                </StyledPaper>
+            </Container>
+        </Grow>
     )
 }
+
+const HeaderLink = styled(Link)`
+    text-decoration: none;
+    color: #009CDA;
+`
+
+const Header = styled.h3`
+    display: grid;
+    place-items: center;
+    font-size: 48px;
+    margin-top: 32px;
+    transition: all 0.5s ease 0s;
+
+    &:hover {
+        transform: translateY(-5px);
+        text-decoration: underline;
+    }
+`
 
 const StyledPaper = styled(Paper)`
     display: flex;
@@ -71,7 +102,7 @@ const StyledPaper = styled(Paper)`
     padding: 16px;
 `
 
-const Header = styled.h4`
+const SubHeader = styled.h4`
     margin-top: 10px;
     margin-bottom: -8px;
     font-size: 34px;
