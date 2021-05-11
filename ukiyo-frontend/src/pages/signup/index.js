@@ -1,7 +1,5 @@
-import React, { useState, useContext } from 'react'
-import { UserContext } from '../../contexts/user-context'
+import React, { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
-import firebase from '../../firebase/firebase'
 import { signUp } from '../../api'
 import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
 import PermContactCalendarOutlinedIcon from '@material-ui/icons/PermContactCalendarOutlined';
@@ -12,7 +10,6 @@ import swal from 'sweetalert'
 const Login = () => {
 
     const history = useHistory();
-    const { user, setUser } = useContext(UserContext);
 
     const initialState = {
         first_name: '',
@@ -36,13 +33,9 @@ const Login = () => {
         }
 
         try {
-            const newUser = await signUp(userInfo);
-            setUser({
-                uid: newUser.data.user.uid,
-                nickname: newUser.data.user.nickname,
-                email: newUser.data.user.email,
-            });
-            history.push('/')
+            await signUp(userInfo);
+            await swal('Sign up successful', 'You can now log in!', 'success')
+            history.push('/signIn')
         } catch (error) {
             swal('Error signing up', 'User already exists!', 'error')
             console.error(error.message)

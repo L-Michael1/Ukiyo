@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { UserContext } from '../../contexts/user-context'
 import { useHistory, Link } from 'react-router-dom'
-import firebase from '../../firebase/firebase'
+import { signIn } from '../../api'
 import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import styled from 'styled-components';
@@ -18,15 +18,23 @@ const Login = () => {
         password: '',
     }
 
-    const handleSubmit = (e) => {
-        swal('hey')
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('logging in')
-        // Auth
-        // Success => 
-        // history.push('/')
-        // Fail => 
-        // Alert user invalid email/password
+
+        try {
+            const existingUser = await signIn(userInfo);
+            console.log(existingUser);
+            setUser({
+                uid: existingUser.data.uid,
+                nickname: existingUser.data.nickname,
+                email: existingUser.data.email,
+            });
+            await swal('Login successful', '', 'success')
+            history.push('/')
+        } catch (error) {
+            swal('Error signing in', 'Something went wrong! Try again later...', 'error')
+            console.error(error.message)
+        }
     }
 
     const handleChange = (e) => {
