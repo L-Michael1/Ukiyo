@@ -6,7 +6,7 @@ import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import styled from 'styled-components';
 import swal from 'sweetalert'
-
+import Footer from '../../components/footer'
 
 const Login = () => {
 
@@ -78,7 +78,6 @@ const Login = () => {
                             </Grid>
                         </Grid>
                     </Form>
-
                 </StyledPaper>
             </Container>
         </Grow>

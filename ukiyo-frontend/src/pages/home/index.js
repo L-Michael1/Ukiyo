@@ -7,33 +7,7 @@ const Home = () => {
     return (
         <Container>
             <Navbar />
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
-            <h1>hey</h1>
+
             <Footer />
         </Container>
     )
