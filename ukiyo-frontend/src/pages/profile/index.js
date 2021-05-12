@@ -1,39 +1,27 @@
 import React, { useState, useContext } from 'react'
 import { UserContext } from '../../contexts/user-context'
 import { useHistory, Link } from 'react-router-dom'
-import { signIn } from '../../api'
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
-import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import styled from 'styled-components';
 import swal from 'sweetalert'
 
-const Login = () => {
+const Profile = () => {
 
     const history = useHistory();
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const initialState = {
-        email: '',
-        password: '',
+        nickname: user.nickname,
+        currentPassword: '',
+        newPassword: '',
+        newPasswordConfirm: '',
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        try {
-            // Store user in local storage for a certain amount of time??
-            const existingUser = await signIn(userInfo);
-            setUser({
-                uid: existingUser.data.uid,
-                nickname: existingUser.data.nickname,
-                email: existingUser.data.email,
-            });
-            await swal('Login successful', '', 'success')
-            history.push('/')
-        } catch (error) {
-            swal('Error signing in', 'Something went wrong! Check credentials or try again later...', 'error')
-            console.error(error.message)
-        }
+        // Check if old password is right
+        // Check if new password is confirmed
     }
 
     const handleChange = (e) => {
@@ -55,31 +43,32 @@ const Login = () => {
                     </HeaderContainer>
                 </HeaderLink>
                 <StyledPaper elevation={4}>
-                    <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#009CDA' }} />
-                    <SubHeader>Sign In</SubHeader>
+                    <AccountBoxIcon fontSize='large' style={{ color: '#009CDA' }} />
+                    <SubHeader>Edit Profile</SubHeader>
                     <Form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={12}>
-                                <TextField name='email' type='email' variant='outlined' label='Email Address' fullWidth required onChange={handleChange} />
+                                <TextField name='nickname' type='text' variant='outlined' label='Profile Name' value={userInfo.nickname} fullWidth required onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
+                                <TextField name='currentPassword' type='password' variant='outlined' label='Current Password' fullWidth required onChange={handleChange} />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <TextField name='newPassword' type='password' variant='outlined' label='New Password' fullWidth required onChange={handleChange} />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <TextField name='newPasswordConfirm' type='password' variant='outlined' label='Confirm New Password' fullWidth required onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>
-                                    Login
+                                    Submit Changes
                             </Button>
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <StyledLink to='/SignUp'>
-                                    Don't have an account? Sign up!
-                            </StyledLink>
                             </Grid>
                         </Grid>
                     </Form>
                 </StyledPaper>
             </Container>
-        </Grow>
+        </Grow >
     )
 }
 
@@ -135,4 +124,4 @@ const StyledLink = styled(Link)`
     justify-content: center;
 `
 
-export default Login;
+export default Profile;

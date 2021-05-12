@@ -31,9 +31,9 @@ const Navbar = () => {
                             ?
                             <SignedInContainer>
                                 <span>Hello,</span>
-                                <UserName>
+                                <UsernameLink to='/Profile'>
                                     {user.nickname}!
-                                </UserName>
+                                </UsernameLink>
                             </SignedInContainer>
                             :
                             <div></div>
@@ -121,7 +121,9 @@ const AuthButton = styled(Button)`
     }
 `
 
-const UserName = styled.span`
+const UsernameLink = styled(Link)`
+    text-decoration: underline;
+    color: #009CDA;
     font-size: 16px;
     font-weight: 600;
 `

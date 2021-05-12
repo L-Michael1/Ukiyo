@@ -7,6 +7,7 @@ import './App.css';
 import HomePage from './pages/home'
 import SignUpPage from './pages/signup'
 import SignInPage from './pages/login'
+import ProfilePage from './pages/profile'
 
 const App = () => {
 
@@ -22,6 +23,7 @@ const App = () => {
         <UserContext.Provider value={{ user, setUser }}>
           <Route exact path='/SignUp' component={SignUpPage} />
           <Route exact path='/SignIn' component={SignInPage} />
+          <Route exact path='/Profile' component={ProfilePage} />
           <Route exact path='/' component={HomePage} />
         </UserContext.Provider>
       </Switch>
