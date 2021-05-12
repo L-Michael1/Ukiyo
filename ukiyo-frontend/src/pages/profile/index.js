@@ -37,6 +37,11 @@ const Profile = () => {
             if (updatedUser.data.message) {
                 swal('Error', 'Invalid password', 'error');
             }
+            setUser({
+                ...user,
+                nickname: updatedUser.data.user.nickname,
+            })
+            history.push('/');
         } catch (error) {
             console.log(error);
         }
