@@ -40,7 +40,6 @@ const Profile = () => {
     }
 
     const handleResetPassword = async () => {
-
         getUser(user.uid).then(async (res, req) => {
             const passwordMatch = await bcrypt.compare(userInfo.currentPassword, res.data.user.password);
             if (passwordMatch) {
@@ -56,13 +55,6 @@ const Profile = () => {
                 return;
             }
         })
-
-        // try {
-        //     const existingUser = await getUser(user.uid);
-
-        // } catch (error) {
-        //     console.error(error);
-        // }
     }
 
     const handleChange = (e) => {
