@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { UserContext } from '../../contexts/user-context'
 import { useHistory, Link } from 'react-router-dom'
+import { updateUser } from '../../api'
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
 import styled from 'styled-components';
@@ -20,8 +21,25 @@ const Profile = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // Check if old password is right
-        // Check if new password is confirmed
+
+        if (userInfo.newPassword !== userInfo.newPasswordConfirm) {
+            swal('Error editing profile', 'New password does not match!', 'error');
+            return;
+        }
+        console.log(userInfo.newPassword)
+        if (userInfo.newPassword !== '' && userInfo.newPassword.length < 6) {
+            swal('Error editing profile', 'Password must be atleast 6 characters!', 'error');
+            return;
+        }
+
+        try {
+            const updatedUser = await updateUser(user.uid, userInfo);
+            if (updatedUser.data.message) {
+                swal('Error', 'Invalid password', 'error');
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const handleChange = (e) => {
@@ -54,10 +72,10 @@ const Profile = () => {
                                 <TextField name='currentPassword' type='password' variant='outlined' label='Current Password' fullWidth required onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                <TextField name='newPassword' type='password' variant='outlined' label='New Password' fullWidth required onChange={handleChange} />
+                                <TextField name='newPassword' type='password' variant='outlined' label='New Password' fullWidth onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                <TextField name='newPasswordConfirm' type='password' variant='outlined' label='Confirm New Password' fullWidth required onChange={handleChange} />
+                                <TextField name='newPasswordConfirm' type='password' variant='outlined' label='Confirm New Password' fullWidth onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>

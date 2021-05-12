@@ -47,9 +47,14 @@ router.patch('/:id', async (req, res, next) => {
     const uid = req.params.id;
     const updatedUser = req.body;
     try {
-        console.log(updatedUser.password);
-        updatedUser.password = await bcrypt.hash(updatedUser.password, 12);
-        console.log(updatedUser.password);
+        const existingUser = await User.findOne({ uid });
+        const isPasswordMatch = await bcrypt.compare(updatedUser.currentPassword, existingUser.password)
+        if (!isPasswordMatch) {
+            return res.json({ message: 'Invalid password' });
+        }
+        if (updatedUser.newPassword !== '') {
+            updatedUser.password = await bcrypt.hash(updatedUser.newPassword, 12);
+        }
         const user = await User.findOneAndUpdate({ uid }, updatedUser, { new: true });
         if (user) {
             const { first_name, last_name, nickname, email } = user;

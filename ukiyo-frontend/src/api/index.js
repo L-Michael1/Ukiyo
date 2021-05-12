@@ -5,3 +5,4 @@ const API = 'http://localhost:5000';
 export const signUp = (userData) => axios.post(`${API}/user`, userData);
 export const signIn = (userData) => axios.post(`${API}/user/signIn`, userData);
 export const getUser = (id) => axios.get(`${API}/user/${id}`);
+export const updateUser = (id, updatedData) => axios.patch(`${API}/user/${id}`, updatedData);
