@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react'
 import { UserContext } from '../../contexts/user-context'
 import { useHistory, Link } from 'react-router-dom'
-import { updateUser } from '../../api'
+import { updateUser, getUser } from '../../api'
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
 import styled from 'styled-components';
 import swal from 'sweetalert'
+import firebase from '../../firebase/firebase';
+import bcrypt from 'bcryptjs';
 
 const Profile = () => {
 
@@ -35,6 +37,32 @@ const Profile = () => {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    const handleResetPassword = async () => {
+
+        getUser(user.uid).then(async (res, req) => {
+            const passwordMatch = await bcrypt.compare(userInfo.currentPassword, res.data.user.password);
+            if (passwordMatch) {
+                firebase.auth().sendPasswordResetEmail(user.email).then(() => {
+                    console.log('hey');
+                    swal('Success', 'Password reset email sent!', 'success');
+                }).catch(err => {
+                    swal('Error', 'Unable to send email at the moment...Try again later', 'error');
+                })
+                console.log('reset password')
+            } else {
+                swal('Error', 'Invalid password', 'error');
+                return;
+            }
+        })
+
+        // try {
+        //     const existingUser = await getUser(user.uid);
+
+        // } catch (error) {
+        //     console.error(error);
+        // }
     }
 
     const handleChange = (e) => {
@@ -69,7 +97,12 @@ const Profile = () => {
                             <Grid item xs={12} sm={12}>
                                 <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>
                                     Submit Changes
-                            </Button>
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <Button fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }} onClick={handleResetPassword}>
+                                    Reset Password
+                                </Button>
                             </Grid>
                         </Grid>
                     </Form>

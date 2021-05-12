@@ -33,8 +33,8 @@ router.get('/:id', async (req, res, next) => {
     try {
         const user = await User.findOne({ uid });
         if (user) {
-            const { first_name, last_name, nickname, email } = user;
-            return res.status(200).json({ user: { uid, first_name, last_name, nickname, email } });
+            const { first_name, last_name, nickname, email, password } = user;
+            return res.status(200).json({ user: { uid, first_name, last_name, nickname, email, password } });
         }
         res.status(404).json({ message: 'User not found' });
     } catch (error) {
