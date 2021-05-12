@@ -15,32 +15,22 @@ const Profile = () => {
     const initialState = {
         nickname: user.nickname,
         currentPassword: '',
-        newPassword: '',
-        newPasswordConfirm: '',
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (userInfo.newPassword !== userInfo.newPasswordConfirm) {
-            swal('Error editing profile', 'New password does not match!', 'error');
-            return;
-        }
-        console.log(userInfo.newPassword)
-        if (userInfo.newPassword !== '' && userInfo.newPassword.length < 6) {
-            swal('Error editing profile', 'Password must be atleast 6 characters!', 'error');
-            return;
-        }
-
         try {
             const updatedUser = await updateUser(user.uid, userInfo);
             if (updatedUser.data.message) {
                 swal('Error', 'Invalid password', 'error');
+                return;
             }
             setUser({
                 ...user,
                 nickname: updatedUser.data.user.nickname,
             })
+            await swal('Success', 'Edited profile successfully', 'success');
             history.push('/');
         } catch (error) {
             console.log(error);
@@ -75,12 +65,6 @@ const Profile = () => {
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField name='currentPassword' type='password' variant='outlined' label='Current Password' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='newPassword' type='password' variant='outlined' label='New Password' fullWidth onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='newPasswordConfirm' type='password' variant='outlined' label='Confirm New Password' fullWidth onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>

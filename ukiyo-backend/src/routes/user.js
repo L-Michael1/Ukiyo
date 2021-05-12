@@ -52,9 +52,6 @@ router.patch('/:id', async (req, res, next) => {
         if (!isPasswordMatch) {
             return res.json({ message: 'Invalid password' });
         }
-        if (updatedUser.newPassword !== '') {
-            updatedUser.password = await bcrypt.hash(updatedUser.newPassword, 12);
-        }
         const user = await User.findOneAndUpdate({ uid }, updatedUser, { new: true });
         if (user) {
             const { first_name, last_name, nickname, email } = user;
@@ -92,6 +89,7 @@ router.post('/signIn', async (req, res, next) => {
             return res.status(200).json({ message: 'User not found' });
         }
         const isPasswordMatch = await bcrypt.compare(password, user.password);
+        console.log(isPasswordMatch)
         if (!isPasswordMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
