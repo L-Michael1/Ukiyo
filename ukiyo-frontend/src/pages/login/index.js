@@ -32,7 +32,7 @@ const Login = () => {
             await swal('Login successful', '', 'success')
             history.push('/')
         } catch (error) {
-            swal('Error signing in', 'Something went wrong! Try again later...', 'error')
+            swal('Error signing in', 'Something went wrong! Check credentials or try again later...', 'error')
             console.error(error.message)
         }
     }

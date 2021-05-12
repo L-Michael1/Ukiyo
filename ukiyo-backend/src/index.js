@@ -34,3 +34,5 @@ try {
 } catch (error) {
     console.error(error.message);
 }
+
+mongoose.set('useFindAndModify', false);

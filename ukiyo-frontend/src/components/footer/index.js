@@ -27,10 +27,10 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    position:absolute;
+    margin-top: auto;
     bottom: 0;
     width: 100%;
-    height: 60px;
+    height: 60px !important;
     border-top: 1px solid whitesmoke;
     background-color: #fff;
 `
