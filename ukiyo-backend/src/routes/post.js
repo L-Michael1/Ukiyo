@@ -6,7 +6,17 @@ import Post from '../models/post.js';
 const router = express.router();
 
 // Create post
-router.post('/', (req, res, next) => { });
+router.post('/:id', (req, res, next) => {
+  const post = req.body;
+  const uid = req.params.id;
+  const newPost = new Post({ ...post, uid, createdAt: new Date().toISOString() })
+  try {
+    await newPost.save();
+    res.status(201).json(newPost);
+  } catch (error) {
+    res.status(409).json({ message: error.message });
+  }
+});
 
 // Read (Get) ALL posts
 router.get('/', async (req, res, next) => {
