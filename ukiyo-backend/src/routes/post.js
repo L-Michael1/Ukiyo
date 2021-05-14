@@ -9,7 +9,14 @@ const router = express.router();
 router.post('/', (req, res, next) => {});
 
 // Read (Get) ALL posts
-router.get('/', (req, res, next) => {});
+router.get('/', async (req, res, next) => {
+  try {
+    const posts = await Post.find();
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
 
 // Read (Get) post
 router.get('/:id', (req, res, next) => {});
