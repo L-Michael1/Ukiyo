@@ -42,7 +42,17 @@ router.get('/:id', (req, res, next) => {
 })
 
 // Edit (Update) post
-router.patch('/:id', (req, res, next) => { });
+router.patch('/:id', (req, res, next) => {
+  const _id = req.params.id;
+  const post = req.body;
+  if (!Mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({ message: 'No post with id' });
+  try {
+    const updatedPost = await postMessage.findByIdAndUpdate(_id, post, { new: true });
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
 
 // Delete post
 router.delete('/:id', (req, res, next) => {
