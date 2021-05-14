@@ -45,4 +45,13 @@ router.get('/:id', (req, res, next) => {
 router.patch('/:id', (req, res, next) => { });
 
 // Delete post
-router.delete('/:id', (req, res, next) => { });
+router.delete('/:id', (req, res, next) => {
+  const _id = req.params.id;
+  if (!Mongoose.Types.ObjectId.isValid(_id)) return res.status(404).json({ message: 'No post with id' });
+  try {
+    const post = await Post.findByIdAndDelete(_id);
+    res.json(post);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+});
