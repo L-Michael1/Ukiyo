@@ -9,6 +9,9 @@ import SignUpPage from './pages/signup'
 import SignInPage from './pages/login'
 import ProfilePage from './pages/profile'
 
+// Components
+import PrivateRoute from './components/privateRoute';
+
 const App = () => {
 
   const [user, setUser] = useState({
@@ -21,9 +24,9 @@ const App = () => {
     <Router>
       <Switch>
         <UserContext.Provider value={{ user, setUser }}>
+          <PrivateRoute path='/Profile' component={ProfilePage} />
           <Route exact path='/SignUp' component={SignUpPage} />
           <Route exact path='/SignIn' component={SignInPage} />
-          <Route exact path='/Profile' component={ProfilePage} />
           <Route exact path='/' component={HomePage} />
         </UserContext.Provider>
       </Switch>
