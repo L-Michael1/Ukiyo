@@ -14,7 +14,9 @@ const postSchema = Schema({
     createdAt: {
         type: Date,
         default: new Date(),
-    }
+    },
+    // If viewable on home page
+    isPrivate: Boolean,
 })
 
 const Post = model(postSchema);
