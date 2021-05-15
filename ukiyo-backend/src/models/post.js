@@ -19,6 +19,6 @@ const postSchema = Schema({
     isPrivate: Boolean,
 })
 
-const Post = model(postSchema);
+const Post = model('Post', postSchema);
 
 export default Post;

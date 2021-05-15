@@ -4,7 +4,8 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 
 // Routes
-import userRoute from './routes/user.js '
+import userRoute from './routes/user.js'
+import postRoute from './routes/post.js'
 
 // Environment variables
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 // Route handlers
 app.use('/user', userRoute);
+app.use('/post', postRoute);
 
 // Default route handler
 app.get('/', (req, res, next) => {
