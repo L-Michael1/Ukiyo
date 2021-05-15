@@ -80,9 +80,10 @@ const Post = ({ post }) => {
 const useStyles = makeStyles((theme) => ({
     root: {
         width: 325,
-        margin: 'auto',
         marginTop: 25,
         marginBottom: 25,
+        marginLeft: 10,
+        marginRight: 10,
     },
     media: {
         height: 0,

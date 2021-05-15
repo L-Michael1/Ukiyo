@@ -32,10 +32,10 @@ const Posts = () => {
                 :
 
                 <Grow in={true} timeout={{ enter: 1800, exit: 1000 }}>
-                    <Container container spacing={0}>
+                    <Container container alignContent='center' alignItems='center' justify='center' >
                         {posts.map((post) => {
                             return (
-                                <Grid item key={post._id} xs={12} sm={8} md={5} lg={4}>
+                                <Grid item key={post._id}>
                                     <Post post={post} />
                                 </Grid>
                             )
@@ -46,10 +46,9 @@ const Posts = () => {
 }
 
 const Container = styled(Grid)`
-    display: flex;
     margin: auto;
     width: 100%;
-    max-width: 70%;
+    max-width: 60%;
 `
 
 const ErrorContainer = styled.div`
