@@ -6,6 +6,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ukiyo from '../../../assets/ukiyo-food.png'
+import moment from 'moment'
 
 const Post = ({ post }) => {
     const classes = useStyles();
@@ -29,8 +30,8 @@ const Post = ({ post }) => {
                             <MoreVertIcon />
                         </IconButton>
                     }
-                    title="Shrimp and Chorizo Paella"
-                    subheader="September 14, 2016"
+                    title={post.title}
+                    subheader={`${moment(post.createdAt).fromNow()} by ${post.creator}`}
                 />
                 <CardMedia
                     className={classes.media}
@@ -39,8 +40,7 @@ const Post = ({ post }) => {
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        This impressive paella is a perfect party dish and a fun meal to cook together with your
-                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                        {post.preview === '' ? 'Click the arrow to view more!' : post.preview}
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>

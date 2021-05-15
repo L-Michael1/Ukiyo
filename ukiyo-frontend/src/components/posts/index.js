@@ -32,7 +32,7 @@ const Posts = () => {
                 :
 
                 <Grow in={true} timeout={{ enter: 1800, exit: 1000 }}>
-                    <Container container alignContent='center' alignItems='center' justify='center' >
+                    <Container container justify='center' >
                         {posts.map((post) => {
                             return (
                                 <Grid item key={post._id}>
