@@ -7,10 +7,6 @@ const postSchema = Schema({
     title: String,
     preview: String,
     recipe: String,
-    likes: {
-        type: [String],
-        default: [],
-    },
     createdAt: {
         type: Date,
         default: new Date(),

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Post from './post.js'
 const { Schema, model } = mongoose;
 
 const userSchema = Schema({
@@ -7,7 +8,10 @@ const userSchema = Schema({
     last_name: { type: String, required: true },
     nickname: { type: String, required: false },
     email: { type: String, required: true },
+    // Will remove password when refactor firebase
     password: { type: String, required: true },
+    // Favourites to hold recipe ids
+    favourites: [String],
 })
 
 const User = model('User', userSchema);
