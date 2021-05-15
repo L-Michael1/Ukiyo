@@ -5,8 +5,8 @@ const postSchema = Schema({
     uid: String,
     creator: String,
     title: String,
-    message: String,
-    tags: [String],
+    preview: String,
+    recipe: String,
     likes: {
         type: [String],
         default: [],
@@ -15,8 +15,6 @@ const postSchema = Schema({
         type: Date,
         default: new Date(),
     },
-    // If viewable on home page
-    isPrivate: Boolean,
 })
 
 const Post = model('Post', postSchema);
