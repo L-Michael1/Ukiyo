@@ -50,14 +50,14 @@ const Navbar = () => {
                         ?
                         <>
                             <SignedInContainer>
-                                <LogoutButton variant='contained' color='secondary' onClick={handleLogout}>LOGOUT</LogoutButton>
+                                <LogoutButton variant='contained' onClick={handleLogout}>LOGOUT</LogoutButton>
                                 <UsernameLink to='/Profile'>{user.nickname}</UsernameLink>
                             </SignedInContainer>
                         </>
                         :
                         <>
-                            <ButtonLink to='/SignIn'>
-                                <AuthButton variant='contained' color='primary'>Login</AuthButton>
+                            <ButtonLink to='/SignUp'>
+                                <AuthButton variant='contained' color='primary'>Join</AuthButton>
                             </ButtonLink>
                         </>
                     }
@@ -130,6 +130,8 @@ const UsernameLink = styled(Link)`
 `
 
 const LogoutButton = styled(Button)`
+    background-color: #DF362D !important;
+    color: #fff !important;
     padding: 6px 10px !important;
     transition: all 0.4s ease 0s !important;
 

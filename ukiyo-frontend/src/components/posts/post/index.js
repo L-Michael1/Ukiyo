@@ -6,6 +6,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ukiyo from '../../../assets/ukiyo-food.png'
+import drooling from '../../../assets/drooling.png'
 import moment from 'moment'
 import styled from 'styled-components';
 
@@ -35,7 +36,7 @@ const Post = ({ post }) => {
                     subheader={`${moment(post.createdAt).fromNow()} by ${post.creator}`}
                 />
                 <MediaCard
-                    image={ukiyo}
+                    image={drooling}
                     title={post.title}
                 />
                 <CardContent>
@@ -78,7 +79,7 @@ const Post = ({ post }) => {
 
 const RecipeCard = styled(Card)`
     width: 325px;
-    margin: 25px 20px;
+    margin: 45px 20px;
 `
 
 const MediaCard = styled(CardMedia)`
