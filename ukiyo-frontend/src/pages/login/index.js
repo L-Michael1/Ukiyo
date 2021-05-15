@@ -2,22 +2,13 @@ import React, { useState, useContext } from 'react'
 import { UserContext } from '../../contexts/user-context'
 import { useHistory, Link } from 'react-router-dom'
 import { signIn } from '../../api'
-import { Container, Grid, Paper, TextField, Button, Fade, Grow, CircularProgress, makeStyles } from '@material-ui/core'
+import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
-import Drooling from '../../assets/drooling-black.png'
 import styled from 'styled-components';
 import swal from 'sweetalert'
-
-const useStyles = makeStyles({
-    loading: {
-        display: 'flex',
-        margin: 'auto',
-        marginTop: '18%',
-    }
-})
+import UserLoading from '../../components/user-loading';
 
 const Login = () => {
-    const classes = useStyles();
     const history = useHistory();
     const { setUser, userLoading, setUserLoading } = useContext(UserContext);
 
@@ -58,10 +49,7 @@ const Login = () => {
 
     return (
         userLoading ?
-            <LoadingContainer>
-                <CircularProgress className={classes.loading} color='primary' size={70} thickness={1.8} />
-                <LoadingLogo src={Drooling} />
-            </LoadingContainer> :
+            <UserLoading /> :
             <Grow in={true} timeout={{ enter: 1200, exit: 1000 }} >
                 <Container maxWidth='xs'>
                     <HeaderLink to='/'>
@@ -98,21 +86,6 @@ const Login = () => {
             </Grow>
     )
 }
-
-const LoadingContainer = styled.div`
-    display:flex;
-    align-items: center;
-    justify-content:center;
-    flex-direction: column;
-`
-
-const LoadingLogo = styled.img`
-    object-fit: contain;
-    width: 100%;
-    max-width: 150px;
-    margin-top: 20px;
-    height: auto;
-`
 
 const HeaderLink = styled(Link)`
     text-decoration: none;
