@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-const Post = () => {
-    return (
-        <div>
-
-        </div>
-    )
+const Post = ({ post }) => {
+    if (post) {
+        return (
+            <div>
+                {post.message}
+            </div>
+        )
+    } else {
+        return null;
+    }
 }
 
-export default Post
+export default Post;

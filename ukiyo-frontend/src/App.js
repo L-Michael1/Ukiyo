@@ -16,6 +16,9 @@ import PrivateRoute from './components/privateRoute';
 import { UserContext } from './contexts/user-context';
 import { PostsContext } from './contexts/posts-context';
 
+// API
+import { getPosts } from './api';
+
 const App = () => {
 
   const [user, setUser] = useState({
@@ -24,21 +27,16 @@ const App = () => {
     email: ''
   });
 
-  const [posts, setPosts] = useState(
-    [
-      {
-        _id: '',
-        creator: '',
-        title: '',
-        message: '',
-        tags: [String],
-        isPrivate: null,
-      }
-    ]
-  );
+  const [posts, setPosts] = useState([]);
+
+  const fetchPosts = async () => {
+    const response = await getPosts();
+    setPosts(response.data);
+    console.log(response.data);
+  }
 
   useEffect(() => {
-
+    fetchPosts();
   }, [])
 
   return (
