@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Grid, Grow, CircularProgress, makeStyles } from '@material-ui/core'
 import { PostsContext } from '../../contexts/posts-context';
-import Drooling from '../../assets/drooling.png';
+import drooling from '../../assets/drooling.png';
 import Post from './post'
 import styled from 'styled-components';
 
@@ -25,7 +25,7 @@ const Posts = () => {
                 <Grow in={true} timeout={{ enter: 1800, exit: 1000 }}>
                     <ErrorContainer>
                         <h1>Something went wrong...</h1>
-                        <ErrorImage src={Drooling} />
+                        <ErrorImage src={drooling} />
                     </ErrorContainer>
                 </Grow >
 

@@ -7,6 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ukiyo from '../../../assets/ukiyo-food.png'
 import moment from 'moment'
+import styled from 'styled-components';
 
 const Post = ({ post }) => {
     const classes = useStyles();
@@ -18,12 +19,12 @@ const Post = ({ post }) => {
 
     if (post) {
         return (
-            <Card className={classes.root}>
+            <RecipeCard>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
+                        <UserAvatar aria-label="recipe">
                             {post.creator.charAt(0)}
-                        </Avatar>
+                        </UserAvatar>
                     }
                     action={
                         <IconButton aria-label="settings">
@@ -33,14 +34,13 @@ const Post = ({ post }) => {
                     title={post.title}
                     subheader={`${moment(post.createdAt).fromNow()} by ${post.creator}`}
                 />
-                <CardMedia
-                    className={classes.media}
+                <MediaCard
                     image={ukiyo}
-                    title="Paella dish"
+                    title={post.title}
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {post.preview === '' ? 'Click the arrow to view more!' : post.preview}
+                        {post.preview === '' ? 'Click the arrow to view more about the recipe!' : post.preview}
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -65,30 +65,32 @@ const Post = ({ post }) => {
                     <CardContent>
                         <Typography paragraph>Method:</Typography>
                         <Typography paragraph>
-                            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                            minutes.
+                            {post.recipe === '' ? 'No recipe found...:(' : post.recipe}
                         </Typography>
                     </CardContent>
                 </Collapse>
-            </Card>
+            </RecipeCard>
         );
     } else {
         return null;
     }
 }
 
+const RecipeCard = styled(Card)`
+    width: 325px;
+    margin: 25px 20px;
+`
+
+const MediaCard = styled(CardMedia)`
+    height: 0;
+    padding-top: 56.25%;
+`
+
+const UserAvatar = styled(Avatar)`
+    background-color: #f4a261 !important;
+`
+
 const useStyles = makeStyles((theme) => ({
-    root: {
-        width: 325,
-        marginTop: 25,
-        marginBottom: 25,
-        marginLeft: 10,
-        marginRight: 10,
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
     expand: {
         transform: 'rotate(0deg)',
         marginLeft: 'auto',
@@ -98,9 +100,6 @@ const useStyles = makeStyles((theme) => ({
     },
     expandOpen: {
         transform: 'rotate(180deg)',
-    },
-    avatar: {
-        backgroundColor: '#f4a261',
     },
 }));
 
