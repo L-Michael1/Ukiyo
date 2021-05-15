@@ -71,9 +71,7 @@ const NavContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    position: sticky;
-    top: 0%;
-    z-index: 1;
+    margin-bottom: auto;
     border-bottom: 1px solid whitesmoke;
     background-color: white;
 `
