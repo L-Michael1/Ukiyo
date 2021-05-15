@@ -28,11 +28,17 @@ const App = () => {
   });
 
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const fetchPosts = async () => {
+    setLoading(true);
     const response = await getPosts();
     setPosts(response.data);
-    console.log(response.data);
+    if (response.data.length === 0) {
+      setError(true);
+    }
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -43,7 +49,7 @@ const App = () => {
     <Router>
       <Switch>
         <UserContext.Provider value={{ user, setUser }}>
-          <PostsContext.Provider value={{ posts, setPosts }}>
+          <PostsContext.Provider value={{ posts, setPosts, loading, error }}>
             <PrivateRoute path='/Profile' component={ProfilePage} />
             <Route exact path='/SignUp' component={SignUpPage} />
             <Route exact path='/SignIn' component={SignInPage} />
