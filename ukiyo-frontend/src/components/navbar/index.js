@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Fade, Button } from '@material-ui/core'
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
 import { UserContext } from '../../contexts/user-context'
-import ukiyo from '../../assets/ukiyo.png'
+import sushi from '../../assets/sushi.png'
 import styled from 'styled-components'
 import swal from 'sweetalert'
 
@@ -29,38 +29,38 @@ const Navbar = () => {
                     {
                         user.uid !== ''
                             ?
-                            <SignedInContainer>
-                                <span>Hello,</span>
-                                <UsernameLink to='/Profile'>
-                                    {user.nickname}!
-                                </UsernameLink>
-                            </SignedInContainer>
+                            <LogoContainer>
+                                <Logo src={sushi} />
+                            </LogoContainer>
                             :
-                            <div></div>
+                            <LogoContainer>
+                                <Logo src={sushi} />
+                            </LogoContainer>
                     }
                 </div>
 
-                <Link to='/'>
+                <LogoLink to='/'>
                     <LogoContainer>
-                        <Logo src={ukiyo} />
+                        <Header>Ukiyo</Header>
                     </LogoContainer>
-                </Link>
+                </LogoLink>
 
                 <AuthContainer>
                     {user.uid !== ''
                         ?
-                        <SignedInContainer>
-                            <LogoutButton variant='contained' color='secondary' onClick={handleLogout}>LOGOUT</LogoutButton>
-                        </SignedInContainer>
+                        <>
+                            <SignedInContainer>
+                                <LogoutButton variant='contained' color='secondary' onClick={handleLogout}>LOGOUT</LogoutButton>
+                                <UsernameLink to='/Profile'>{user.nickname}</UsernameLink>
+                            </SignedInContainer>
+                        </>
                         :
                         <>
-                            {/* <ButtonLink to='/SignUp'>
-                                <AuthButton variant='contained' color='primary'>Join</AuthButton>
-                            </ButtonLink> */}
                             <ButtonLink to='/SignIn'>
                                 <AuthButton variant='contained' color='primary'>Login</AuthButton>
                             </ButtonLink>
-                        </>}
+                        </>
+                    }
                 </AuthContainer>
             </NavContainer>
         </Fade>
@@ -83,22 +83,25 @@ const LogoContainer = styled.div`
     transition: all 0.4s ease 0s;
 
     &:hover {
-        transform: translateY(-3px);
+        transform: translateY(-4px);
     }
+`
+
+const LogoLink = styled(Link)`
+    text-decoration: none;
+    color: black;
+`
+
+const Header = styled.h1`
+    font-size: 36px;
 `
 
 const Logo = styled.img`
     object-fit: contain;
     width: 100%auto;
     height: auto;
-    max-width: 150px;
-    margin: 8px;
-`
-
-const SecondaryLogo = styled(LoyaltyOutlinedIcon)`
-    margin-top: 2px;
-    color: #009CDA !important;
-    font-size: 42px !important;
+    max-width: 100px;
+    margin-top: 4px;
 `
 
 const AuthContainer = styled.div`
@@ -110,22 +113,22 @@ const ButtonLink = styled(Link)`
 `
 
 const AuthButton = styled(Button)`
-    background-color: #009CDA !important;
+    background-color: #f4a261 !important;
     margin: 8px !important;
     transition: all 0.4s ease 0s !important;
     padding: 7px 13px !important;
 
     &:hover {
-        background-color: #0082b5 !important;
+        background-color: #f08a3a !important;
         transform: translateY(-3px);
     }
 `
 
 const UsernameLink = styled(Link)`
-    text-decoration: underline;
-    color: #009CDA;
+    color: #f4a261;
     font-size: 16px;
     font-weight: 600;
+    padding-top: 12px;
 `
 
 const LogoutButton = styled(Button)`
@@ -142,6 +145,7 @@ const SignedInContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 7px;
 `
 
 export default Navbar

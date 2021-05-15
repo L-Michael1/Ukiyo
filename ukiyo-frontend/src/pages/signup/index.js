@@ -69,7 +69,7 @@ const Login = () => {
                     </HeaderContainer>
                 </HeaderLink>
                 <StyledPaper elevation={4}>
-                    <PermContactCalendarOutlinedIcon fontSize='large' style={{ color: '#009CDA' }} />
+                    <PermContactCalendarOutlinedIcon fontSize='large' style={{ color: '#f4a261' }} />
                     <FormHeader>Sign Up</FormHeader>
                     <Form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
@@ -92,7 +92,7 @@ const Login = () => {
                                 <TextField name='passwordConfirm' type='password' variant='outlined' label='Password Confirmation' fullWidth required onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>
+                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
                                     signup
                             </Button>
                             </Grid>
@@ -111,7 +111,7 @@ const Login = () => {
 
 const HeaderLink = styled(Link)`
     text-decoration: none;
-    color: #009CDA;
+    color: #f4a261;
 `
 
 const HeaderContainer = styled.div`

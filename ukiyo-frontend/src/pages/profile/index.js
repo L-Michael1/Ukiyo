@@ -76,7 +76,7 @@ const Profile = () => {
                     </HeaderContainer>
                 </HeaderLink>
                 <StyledPaper elevation={4}>
-                    <AccountBoxIcon fontSize='large' style={{ color: '#009CDA' }} />
+                    <AccountBoxIcon fontSize='large' style={{ color: '#f4a261' }} />
                     <SubHeader>Edit Profile</SubHeader>
                     <Form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
@@ -87,12 +87,12 @@ const Profile = () => {
                                 <TextField name='currentPassword' type='password' variant='outlined' label='Current Password' fullWidth required onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>
+                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
                                     Submit Changes
                                 </Button>
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                <Button fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }} onClick={handleResetPassword}>
+                                <Button fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }} onClick={handleResetPassword}>
                                     Reset Password
                                 </Button>
                             </Grid>
@@ -106,7 +106,7 @@ const Profile = () => {
 
 const HeaderLink = styled(Link)`
     text-decoration: none;
-    color: #009CDA;
+    color: #f4a261;
 `
 
 const HeaderContainer = styled.div`

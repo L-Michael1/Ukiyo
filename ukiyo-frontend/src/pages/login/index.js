@@ -55,7 +55,7 @@ const Login = () => {
                     </HeaderContainer>
                 </HeaderLink>
                 <StyledPaper elevation={4}>
-                    <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#009CDA' }} />
+                    <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#f4a261' }} />
                     <SubHeader>Sign In</SubHeader>
                     <Form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
@@ -66,7 +66,7 @@ const Login = () => {
                                 <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#009CDA' }}>
+                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
                                     Login
                             </Button>
                             </Grid>
@@ -85,7 +85,7 @@ const Login = () => {
 
 const HeaderLink = styled(Link)`
     text-decoration: none;
-    color: #009CDA;
+    color: #f4a261;
 `
 
 const HeaderContainer = styled.div`

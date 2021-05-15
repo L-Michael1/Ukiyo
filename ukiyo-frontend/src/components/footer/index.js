@@ -13,7 +13,7 @@ const Footer = () => {
                     <LinkedInIcon style={{ color: 'black' }} fontSize='large' />
                 </HoverAnchor>
                 <HoverLink to='/'>
-                    <h3>Ukiyo</h3>
+                    <h2>Ukiyo</h2>
                 </HoverLink>
                 <a href='http://github.com/L-Michael1' target='_blank'>
                     <StyledAvatar src={github} />
@@ -30,7 +30,7 @@ const Container = styled.div`
     margin-top: auto;
     bottom: 0;
     width: 100%;
-    height: 60px !important;
+    height: 80px !important;
     border-top: 1px solid whitesmoke;
     background-color: #fff;
 `
@@ -54,7 +54,7 @@ const HoverAnchor = styled.a`
 
 const HoverLink = styled(Link)`
     text-decoration:none;
-    color: #009CDA;
+    color: #f4a261;
     transition: all 0.4s ease 0s;
 
     &:hover{
