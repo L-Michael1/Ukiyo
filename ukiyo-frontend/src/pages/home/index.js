@@ -9,41 +9,14 @@ const Home = () => {
         <Container>
             <Navbar />
             <Posts />
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
-            <h1>boo</h1>
+
             <Footer />
         </Container>
     )
 }
 
 const Container = styled.div`
-    
+      
 `
+
 export default Home;
