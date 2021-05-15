@@ -2,15 +2,24 @@ import React, { useState, useContext } from 'react'
 import { UserContext } from '../../contexts/user-context'
 import { useHistory, Link } from 'react-router-dom'
 import { signIn } from '../../api'
-import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
+import { Container, Grid, Paper, TextField, Button, Fade, Grow, CircularProgress, makeStyles } from '@material-ui/core'
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
+import Drooling from '../../assets/drooling-black.png'
 import styled from 'styled-components';
 import swal from 'sweetalert'
 
-const Login = () => {
+const useStyles = makeStyles({
+    loading: {
+        display: 'flex',
+        margin: 'auto',
+        marginTop: '18%',
+    }
+})
 
+const Login = () => {
+    const classes = useStyles();
     const history = useHistory();
-    const { setUser } = useContext(UserContext);
+    const { setUser, userLoading, setUserLoading } = useContext(UserContext);
 
     const initialState = {
         email: '',
@@ -19,7 +28,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setUserLoading(true);
         try {
             // Store user in local storage for a certain amount of time??
             const existingUser = await signIn(userInfo);
@@ -28,12 +37,14 @@ const Login = () => {
                 nickname: existingUser.data.nickname,
                 email: existingUser.data.email,
             });
+            setUserLoading(false);
             await swal('Login successful', '', 'success')
             history.push('/')
         } catch (error) {
             swal('Error signing in', 'Something went wrong! Check credentials or try again later...', 'error')
             console.error(error.message)
         }
+        setUserLoading(false);
     }
 
     const handleChange = (e) => {
@@ -46,42 +57,62 @@ const Login = () => {
     const [userInfo, setUserInfo] = useState(initialState);
 
     return (
-        <Grow in={true} timeout={{ enter: 1200, exit: 1000 }} >
-            <Container maxWidth='xs'>
-                <HeaderLink to='/'>
-                    <HeaderContainer>
-                        <Header>Ukiyo </Header>
-                        <p>HOME</p>
-                    </HeaderContainer>
-                </HeaderLink>
-                <StyledPaper elevation={4}>
-                    <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#f4a261' }} />
-                    <SubHeader>Sign In</SubHeader>
-                    <Form onSubmit={handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='email' type='email' variant='outlined' label='Email Address' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
-                                    Login
+        userLoading ?
+            <LoadingContainer>
+                <CircularProgress className={classes.loading} color='primary' size={70} thickness={1.8} />
+                <LoadingLogo src={Drooling} />
+            </LoadingContainer> :
+            <Grow in={true} timeout={{ enter: 1200, exit: 1000 }} >
+                <Container maxWidth='xs'>
+                    <HeaderLink to='/'>
+                        <HeaderContainer>
+                            <Header>Ukiyo </Header>
+                            <p>HOME</p>
+                        </HeaderContainer>
+                    </HeaderLink>
+                    <StyledPaper elevation={4}>
+                        <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#f4a261' }} />
+                        <SubHeader>Sign In</SubHeader>
+                        <Form onSubmit={handleSubmit}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField name='email' type='email' variant='outlined' label='Email Address' fullWidth required onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
+                                        Login
                             </Button>
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <StyledLink to='/SignUp'>
-                                    Don't have an account? Sign up!
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <StyledLink to='/SignUp'>
+                                        Don't have an account? Sign up!
                             </StyledLink>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Form>
-                </StyledPaper>
-            </Container>
-        </Grow>
+                        </Form>
+                    </StyledPaper>
+                </Container>
+            </Grow>
     )
 }
+
+const LoadingContainer = styled.div`
+    display:flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+`
+
+const LoadingLogo = styled.img`
+    object-fit: contain;
+    width: 100%;
+    max-width: 150px;
+    margin-top: 20px;
+    height: auto;
+`
 
 const HeaderLink = styled(Link)`
     text-decoration: none;

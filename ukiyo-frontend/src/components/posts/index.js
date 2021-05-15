@@ -16,9 +16,9 @@ const useStyles = makeStyles({
 
 const Posts = () => {
     const classes = useStyles();
-    const { posts, loading, error } = useContext(PostsContext);
+    const { posts, postsLoading, error } = useContext(PostsContext);
     return (
-        loading ?
+        postsLoading ?
             <CircularProgress className={classes.loading} color='secondary' size={80} thickness={1.8} />
             : error ?
 
