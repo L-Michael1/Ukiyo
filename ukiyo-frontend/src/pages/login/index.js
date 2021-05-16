@@ -10,7 +10,7 @@ import UserLoading from '../../components/user-loading';
 
 const Login = () => {
     const history = useHistory();
-    const { setUser, userLoading, setUserLoading } = useContext(UserContext);
+    const { user, setUser, userLoading, setUserLoading } = useContext(UserContext);
 
     const initialState = {
         email: '',
@@ -28,6 +28,11 @@ const Login = () => {
                 nickname: existingUser.data.nickname,
                 email: existingUser.data.email,
             });
+            localStorage.setItem('user', JSON.stringify({
+                uid: existingUser.data.uid,
+                nickname: existingUser.data.nickname,
+                email: existingUser.data.email,
+            }));
             setUserLoading(false);
             history.push('/')
         } catch (error) {

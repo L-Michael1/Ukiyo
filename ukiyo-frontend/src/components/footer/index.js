@@ -15,7 +15,7 @@ const Footer = () => {
                 <HoverLink to='/'>
                     <h2>Ukiyo</h2>
                 </HoverLink>
-                <a href='http://github.com/L-Michael1' target='_blank'>
+                <a href='http://github.com/L-Michael1' target='_blank' rel='noreferrer'>
                     <StyledAvatar src={github} />
                 </a>
             </Container>

@@ -16,7 +16,6 @@ const PostModal = () => {
     };
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('recipe')) || initialFormData);
-    console.log(formData);
 
     const handleModalOpen = () => {
         setIsOpen(true);

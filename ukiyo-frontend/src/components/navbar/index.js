@@ -11,14 +11,12 @@ const Navbar = () => {
     const { user, setUser } = useContext(UserContext);
 
     const handleLogout = () => {
-        // Set user to empty
-        // Clear local storage??
         setUser({
             uid: '',
             nickname: '',
             email: '',
         });
-
+        localStorage.removeItem('user');
         swal(`You have logged out`, "Successfully logged out", "success")
     }
 

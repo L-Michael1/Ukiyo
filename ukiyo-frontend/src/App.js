@@ -21,11 +21,14 @@ import { getPosts } from './api';
 
 const App = () => {
 
-  const [user, setUser] = useState({
+  const initialUserState = {
     uid: '',
     nickname: '',
     email: ''
-  });
+  }
+
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || initialUserState);
+  console.log(user);
 
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(false);
