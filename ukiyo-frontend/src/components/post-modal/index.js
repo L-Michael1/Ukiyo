@@ -155,11 +155,24 @@ const ModalButton = styled(Button)`
     color: #fff !important;
     padding: 9px !important;
     font-size: 14px !important;
+    transition: all 0.4s ease 0s !important;
+
+    &:hover {
+        background-color: #f08a3a !important;
+        transform: translateY(-2px) !important;
+    }
+    
 `
 
 const LoginButton = styled(Button)`
     background-color: #FF8300 !important;
     color: #fff !important;
+    transition: all 0.4s ease 0s !important;
+
+    &:hover {
+        background-color: #f08a3a !important;
+        transform: translateY(-2px) !important;
+    }
 `
 
 const LoginLink = styled(Link)`

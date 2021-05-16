@@ -20,7 +20,7 @@ const Post = ({ post }) => {
         return (
             <RecipeCard>
                 <CardHeader
-                    style={{ minHeight: '55px' }}
+                    style={{ minHeight: '55px', maxHeight: '55px' }}
                     avatar={
                         <UserAvatar aria-label="recipe">
                             {post.creator.charAt(0)}
@@ -38,7 +38,7 @@ const Post = ({ post }) => {
                     image={post.picture}
                     title={post.title}
                 />
-                <CardContent>
+                <CardContent style={{ maxHeight: '40px', minHeight: '40px' }}>
                     <Typography style={{ wordBreak: 'normal' }} variant="body2" color="textSecondary" component="p">
                         {post.preview === '' ? 'Click the arrow to view more about the recipe!' : post.preview}
                     </Typography>
@@ -79,7 +79,6 @@ const Post = ({ post }) => {
 const RecipeCard = styled(Card)`
     width: 325px;
     margin: 45px 20px;
-    min-height: 425px;
 `
 
 const MediaCard = styled(CardMedia)`

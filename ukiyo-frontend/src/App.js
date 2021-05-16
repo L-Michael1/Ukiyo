@@ -39,6 +39,7 @@ const App = () => {
     setPostsLoading(true);
     const response = await getPosts();
     response.data.reverse();
+    console.log(response);
     setPosts(response.data);
     if (response.data.length === 0) {
       setError(true);
