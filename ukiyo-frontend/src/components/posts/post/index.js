@@ -20,6 +20,7 @@ const Post = ({ post }) => {
         return (
             <RecipeCard>
                 <CardHeader
+                    style={{ minHeight: '55px' }}
                     avatar={
                         <UserAvatar aria-label="recipe">
                             {post.creator.charAt(0)}
@@ -42,7 +43,7 @@ const Post = ({ post }) => {
                         {post.preview === '' ? 'Click the arrow to view more about the recipe!' : post.preview}
                     </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
+                <RecipeActions disableSpacing>
                     <IconButton aria-label="add to favorites">
                         <FavoriteIcon />
                     </IconButton>
@@ -59,7 +60,7 @@ const Post = ({ post }) => {
                     >
                         <ExpandMoreIcon />
                     </IconButton>
-                </CardActions>
+                </RecipeActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph>Method:</Typography>
@@ -78,6 +79,7 @@ const Post = ({ post }) => {
 const RecipeCard = styled(Card)`
     width: 325px;
     margin: 45px 20px;
+    min-height: 425px;
 `
 
 const MediaCard = styled(CardMedia)`
@@ -94,6 +96,9 @@ const Recipe = styled.pre`
     white-space: pre-wrap;
     font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 15px;
+`
+
+const RecipeActions = styled(CardActions)`
 `
 
 const useStyles = makeStyles((theme) => ({
