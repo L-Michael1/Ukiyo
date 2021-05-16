@@ -15,7 +15,8 @@ const PostModal = () => {
         recipe: ''
     };
     const [isOpen, setIsOpen] = useState(false);
-    const [formData, setFormData] = useState(initialFormData);
+    const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('recipe')) || initialFormData);
+    console.log(formData);
 
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -30,6 +31,7 @@ const PostModal = () => {
             ...formData,
             [e.target.name]: e.target.value,
         })
+        localStorage.setItem('recipe', JSON.stringify(formData));
     }
 
     const handleSubmit = () => {
@@ -73,13 +75,13 @@ const PostModal = () => {
                             <Form onSubmit={handleSubmit}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={12}>
-                                        <TextField name='title' type='text' variant='outlined' label='Recipe Name' multiline fullWidth required onChange={handleFormChange} />
+                                        <TextField name='title' type='text' variant='outlined' label='Recipe Name' value={formData.title} multiline fullWidth required onChange={handleFormChange} />
                                     </Grid>
                                     <Grid item xs={12} sm={12}>
-                                        <TextField name='preview' type='text' variant='outlined' label='Recipe Preview' multiline fullWidth required onChange={handleFormChange} />
+                                        <TextField name='preview' type='text' variant='outlined' label='Recipe Preview' value={formData.preview} multiline fullWidth required onChange={handleFormChange} />
                                     </Grid>
                                     <Grid item xs={12} sm={12}>
-                                        <TextField name='recipe' type='text' variant='outlined' label='Recipe Instructions' multiline fullWidth required onChange={handleFormChange} />
+                                        <TextField name='recipe' type='text' variant='outlined' label='Recipe Instructions' value={formData.recipe} multiline fullWidth required onChange={handleFormChange} />
                                     </Grid>
                                     <Grid item xs={12} sm={12}>
                                         <SubmitButton type='submit' fullWidth>Create!</SubmitButton>
