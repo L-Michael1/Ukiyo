@@ -48,7 +48,7 @@ const App = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, [])
+  }, [user])
 
   return (
     <Router>

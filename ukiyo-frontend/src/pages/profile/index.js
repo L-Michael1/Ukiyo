@@ -32,30 +32,32 @@ const Profile = () => {
                 ...user,
                 nickname: updatedUser.data.user.nickname,
             })
+            localStorage.setItem('user', JSON.stringify({ ...user, nickname: updatedUser.data.user.nickname }));
             await swal('Success', 'Edited profile successfully', 'success');
             history.push('/');
+            Location.reload();
         } catch (error) {
             console.log(error);
         }
     }
 
-    const handleResetPassword = async () => {
-        getUser(user.uid).then(async (res, req) => {
-            const passwordMatch = await bcrypt.compare(userInfo.currentPassword, res.data.user.password);
-            if (passwordMatch) {
-                firebase.auth().sendPasswordResetEmail(user.email).then(() => {
-                    console.log('hey');
-                    swal('Success', 'Password reset email sent!', 'success');
-                }).catch(err => {
-                    swal('Error', 'Unable to send email at the moment...Try again later', 'error');
-                })
-                console.log('reset password')
-            } else {
-                swal('Error', 'Invalid password', 'error');
-                return;
-            }
-        })
-    }
+    // const handleResetPassword = async () => {
+    //     getUser(user.uid).then(async (res, req) => {
+    //         const passwordMatch = await bcrypt.compare(userInfo.currentPassword, res.data.user.password);
+    //         if (passwordMatch) {
+    //             firebase.auth().sendPasswordResetEmail(user.email).then(() => {
+    //                 console.log('hey');
+    //                 swal('Success', 'Password reset email sent!', 'success');
+    //             }).catch(err => {
+    //                 swal('Error', 'Unable to send email at the moment...Try again later', 'error');
+    //             })
+    //             console.log('reset password')
+    //         } else {
+    //             swal('Error', 'Invalid password', 'error');
+    //             return;
+    //         }
+    //     })
+    // }
 
     const handleChange = (e) => {
         setUserInfo({
@@ -91,11 +93,11 @@ const Profile = () => {
                                     Submit Changes
                                 </Button>
                             </Grid>
-                            <Grid item xs={12} sm={12}>
+                            {/* <Grid item xs={12} sm={12}>
                                 <Button fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }} onClick={handleResetPassword}>
                                     Reset Password
                                 </Button>
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Form>
                 </StyledPaper>

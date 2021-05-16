@@ -73,7 +73,7 @@ const SignUp = () => {
                 <Container maxWidth='xs'>
                     <HeaderLink to='/'>
                         <HeaderContainer>
-                            <Header>Ukiyo </Header>
+                            <Header>Ukiyo</Header>
                             <p>HOME</p>
                         </HeaderContainer>
                     </HeaderLink>

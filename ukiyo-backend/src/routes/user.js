@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 
 // Models
 import User from '../models/user.js'
+import Post from '../models/post.js'
 
 // Auth
 import firebase from '../firebase/firebase.js'
@@ -53,6 +54,10 @@ router.patch('/:id', async (req, res, next) => {
             return res.json({ message: 'Invalid password' });
         }
         const user = await User.findOneAndUpdate({ uid }, updatedUser, { new: true });
+
+        // Update posts
+        await Post.updateMany({ uid }, { creator: user.nickname });
+
         if (user) {
             const { first_name, last_name, nickname, email } = user;
             return res.status(200).json({ user: { uid, first_name, last_name, nickname, email } });
