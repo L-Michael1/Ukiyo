@@ -1,12 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, Button, Backdrop, Fade, Paper, TextField, Grid, Container } from '@material-ui/core';
-import { UserContext } from '../../contexts/user-context'
-import drooling from '../../assets/drooling.png'
+import { UserContext } from '../../contexts/user-context';
+import { PostsContext } from '../../contexts/posts-context';
+import { createPost, getPosts } from '../../api';
+import drooling from '../../assets/drooling.png';
 import styled from 'styled-components';
+import swal from 'sweetalert';
 
 const PostModal = () => {
     const { user } = useContext(UserContext);
+    const { posts, setPosts, setPostsLoading, error, setError } = useContext(PostsContext);
     const initialFormData = {
         uid: user.uid,
         creator: user.nickname,
@@ -33,7 +37,26 @@ const PostModal = () => {
         localStorage.setItem('recipe', JSON.stringify(formData));
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setPostsLoading(true);
+        setIsOpen(false);
+        try {
+            await createPost(user.uid, { ...formData });
+            const response = await getPosts();
+            response.data.reverse();
+            setPosts(response.data);
+            if (response.data.length === 0) {
+                setError(true);
+            }
+            localStorage.removeItem('recipe');
+            setFormData(initialFormData);
+            await swal('Success', 'Created a new recipe', 'success')
+        } catch (error) {
+            console.error(error.message);
+            await swal('Error', 'Trouble creating recipe...try again later', 'error')
+        }
+        setPostsLoading(false);
     }
 
     return (

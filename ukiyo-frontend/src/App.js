@@ -38,6 +38,7 @@ const App = () => {
   const fetchPosts = async () => {
     setPostsLoading(true);
     const response = await getPosts();
+    response.data.reverse();
     setPosts(response.data);
     if (response.data.length === 0) {
       setError(true);
@@ -53,7 +54,7 @@ const App = () => {
     <Router>
       <Switch>
         <UserContext.Provider value={{ user, setUser, userLoading, setUserLoading }}>
-          <PostsContext.Provider value={{ posts, setPosts, postsLoading, error }}>
+          <PostsContext.Provider value={{ posts, setPosts, postsLoading, setPostsLoading, error, setError }}>
             <PrivateRoute path='/Profile' component={ProfilePage} />
             <Route exact path='/SignUp' component={SignUpPage} />
             <Route exact path='/SignIn' component={SignInPage} />
