@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { signUp } from '../../api'
 import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
 import PermContactCalendarOutlinedIcon from '@material-ui/icons/PermContactCalendarOutlined';
 import styled from 'styled-components';
 import swal from 'sweetalert'
+import { UserContext } from '../../contexts/user-context'
+import UserLoading from '../../components/user-loading';
 
-
-const Login = () => {
-
+const SignUp = () => {
     const history = useHistory();
+    const { userLoading, setUserLoading } = useContext(UserContext);
 
     const initialState = {
         first_name: '',
@@ -22,19 +23,23 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setUserLoading(true);
 
         if (userInfo.nickname.length > 10) {
             swal('Error signing up', 'Profile name has a maximum of 10 characters!', 'error')
+            setUserLoading(false);
             return;
         }
 
         if (userInfo.password.length < 6) {
             swal('Error signing up', 'Password must be atleast 6 characters!', 'error')
+            setUserLoading(false);
             return;
         }
 
         if (userInfo.password !== userInfo.passwordConfirm) {
             swal('Error signing up', 'Passwords do not match!', 'error');
+            setUserLoading(false);
             return;
         }
 
@@ -42,9 +47,11 @@ const Login = () => {
             await signUp(userInfo);
             await swal('Sign up successful', 'You can now log in!', 'success')
             history.push('/signIn')
+            setUserLoading(false);
         } catch (error) {
             swal('Error signing up', 'User already exists!', 'error')
             console.error(error.message)
+            setUserLoading(false);
         }
     }
 
@@ -60,52 +67,54 @@ const Login = () => {
     console.log(userInfo);
 
     return (
-        <Grow in={true} timeout={{ enter: 1200, exit: 1000 }} >
-            <Container maxWidth='xs'>
-                <HeaderLink to='/'>
-                    <HeaderContainer>
-                        <Header>Ukiyo </Header>
-                        <p>HOME</p>
-                    </HeaderContainer>
-                </HeaderLink>
-                <StyledPaper elevation={4}>
-                    <PermContactCalendarOutlinedIcon fontSize='large' style={{ color: '#f4a261' }} />
-                    <FormHeader>Sign Up</FormHeader>
-                    <Form onSubmit={handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='first_name' type='text' variant='outlined' label='First Name' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='last_name' type='text' variant='outlined' label='Last Name' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='nickname' type='text' variant='outlined' label='Profile Name' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='email' type='email' variant='outlined' label='Email Address' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <TextField name='passwordConfirm' type='password' variant='outlined' label='Password Confirmation' fullWidth required onChange={handleChange} />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
-                                    signup
+        userLoading ?
+            <UserLoading /> :
+            <Grow in={true} timeout={{ enter: 1200, exit: 1000 }} >
+                <Container maxWidth='xs'>
+                    <HeaderLink to='/'>
+                        <HeaderContainer>
+                            <Header>Ukiyo </Header>
+                            <p>HOME</p>
+                        </HeaderContainer>
+                    </HeaderLink>
+                    <StyledPaper elevation={4}>
+                        <PermContactCalendarOutlinedIcon fontSize='large' style={{ color: '#f4a261' }} />
+                        <FormHeader>Sign Up</FormHeader>
+                        <Form onSubmit={handleSubmit}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField name='first_name' type='text' variant='outlined' label='First Name' fullWidth required onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField name='last_name' type='text' variant='outlined' label='Last Name' fullWidth required onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField name='nickname' type='text' variant='outlined' label='Profile Name' fullWidth required onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField name='email' type='email' variant='outlined' label='Email Address' fullWidth required onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <TextField name='passwordConfirm' type='password' variant='outlined' label='Password Confirmation' fullWidth required onChange={handleChange} />
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
+                                        signup
                             </Button>
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <StyledLink to='/SignIn'>
-                                    Already have an account? Sign in!
+                                </Grid>
+                                <Grid item xs={12} sm={12}>
+                                    <StyledLink to='/SignIn'>
+                                        Already have an account? Sign in!
                             </StyledLink>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Form>
-                </StyledPaper>
-            </Container>
-        </Grow>
+                        </Form>
+                    </StyledPaper>
+                </Container>
+            </Grow>
     )
 }
 
@@ -161,4 +170,4 @@ const StyledLink = styled(Link)`
     justify-content: center;
 `
 
-export default Login;
+export default SignUp;

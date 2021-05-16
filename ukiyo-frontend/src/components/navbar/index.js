@@ -89,6 +89,7 @@ const LogoLink = styled(Link)`
 `
 
 const Header = styled.h1`
+    font-weight: 500;
     font-size: 36px;
 `
 

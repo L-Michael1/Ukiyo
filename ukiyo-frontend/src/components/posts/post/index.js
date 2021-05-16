@@ -79,6 +79,11 @@ const Post = ({ post }) => {
 const RecipeCard = styled(Card)`
     width: 325px;
     margin: 45px 20px;
+    transition: all 0.4s ease 0s !important;
+
+    &:hover {
+        transform: perspective(1000px) translateZ(25px)
+    }
 `
 
 const MediaCard = styled(CardMedia)`
