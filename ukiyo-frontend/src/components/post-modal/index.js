@@ -4,19 +4,23 @@ import { Modal, Button, Backdrop, Fade, Paper, TextField, Grid, Container } from
 import { UserContext } from '../../contexts/user-context';
 import { PostsContext } from '../../contexts/posts-context';
 import { createPost, getPosts } from '../../api';
+import FileBase from 'react-file-base64';
+import { DEFAULT_PIC } from './constant'
 import drooling from '../../assets/drooling.png';
 import styled from 'styled-components';
 import swal from 'sweetalert';
 
+
 const PostModal = () => {
     const { user } = useContext(UserContext);
-    const { posts, setPosts, setPostsLoading, error, setError } = useContext(PostsContext);
+    const { setPosts, setPostsLoading, error, setError } = useContext(PostsContext);
     const initialFormData = {
         uid: user.uid,
         creator: user.nickname,
         title: '',
         preview: '',
-        recipe: ''
+        recipe: '',
+        picture: DEFAULT_PIC,
     };
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('recipe')) || initialFormData);
@@ -104,6 +108,17 @@ const PostModal = () => {
                                     </Grid>
                                     <Grid item xs={12} sm={12}>
                                         <TextField name='recipe' type='text' variant='outlined' label='Recipe Instructions' value={formData.recipe} multiline fullWidth required onChange={handleFormChange} />
+                                    </Grid>
+                                    <Grid item xs={12} sm={12}>
+                                        <div>
+                                            <FileBase
+                                                type='file'
+                                                multiple={false}
+                                                onDone={({ base64 }) => {
+                                                    setFormData({ ...formData, picture: base64 })
+                                                }}
+                                            />
+                                        </div>
                                     </Grid>
                                     <Grid item xs={12} sm={12}>
                                         <SubmitButton type='submit' fullWidth>Create!</SubmitButton>

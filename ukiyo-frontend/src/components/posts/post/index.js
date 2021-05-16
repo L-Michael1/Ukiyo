@@ -36,7 +36,7 @@ const Post = ({ post }) => {
                     subheader={`${moment(post.createdAt).fromNow()} by ${post.creator}`}
                 />
                 <MediaCard
-                    image={drooling}
+                    image={post.picture}
                     title={post.title}
                 />
                 <CardContent>
@@ -65,9 +65,9 @@ const Post = ({ post }) => {
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph>Method:</Typography>
-                        <Typography paragraph>
+                        <Recipe style={{ whiteSpace: 'pre-wrap' }}>
                             {post.recipe === '' ? 'No recipe found...:(' : post.recipe}
-                        </Typography>
+                        </Recipe>
                     </CardContent>
                 </Collapse>
             </RecipeCard>
@@ -89,6 +89,12 @@ const MediaCard = styled(CardMedia)`
 
 const UserAvatar = styled(Avatar)`
     background-color: #f4a261 !important;
+`
+
+const Recipe = styled.pre`
+    white-space: pre-wrap;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
 `
 
 const useStyles = makeStyles((theme) => ({

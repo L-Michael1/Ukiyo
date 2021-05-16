@@ -1,4 +1,4 @@
-import express, { Router } from 'express';
+import express from 'express';
 
 // Models
 import Post from '../models/post.js';

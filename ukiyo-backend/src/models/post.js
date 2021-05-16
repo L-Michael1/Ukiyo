@@ -7,6 +7,7 @@ const postSchema = Schema({
     title: { type: String, required: true },
     preview: { type: String, default: '' },
     recipe: { type: String, default: '' },
+    picture: { type: String, default: '' },
     createdAt: {
         type: Date,
         default: new Date(),
