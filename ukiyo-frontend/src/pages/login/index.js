@@ -29,7 +29,6 @@ const Login = () => {
                 email: existingUser.data.email,
             });
             setUserLoading(false);
-            await swal('Login successful', '', 'success')
             history.push('/')
         } catch (error) {
             swal('Error signing in', 'Something went wrong! Check credentials or try again later...', 'error')
@@ -72,12 +71,12 @@ const Login = () => {
                                 <Grid item xs={12} sm={12}>
                                     <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
                                         Login
-                            </Button>
+                                    </Button>
                                 </Grid>
                                 <Grid item xs={12} sm={12}>
                                     <StyledLink to='/SignUp'>
                                         Don't have an account? Sign up!
-                            </StyledLink>
+                                    </StyledLink>
                                 </Grid>
                             </Grid>
                         </Form>

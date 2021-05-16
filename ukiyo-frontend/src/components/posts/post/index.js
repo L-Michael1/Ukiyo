@@ -6,7 +6,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ukiyo from '../../../assets/ukiyo-food.png'
-import drooling from '../../../assets/drooling.png'
+import drooling from '../../../assets/drooling-black.png'
 import moment from 'moment'
 import styled from 'styled-components';
 

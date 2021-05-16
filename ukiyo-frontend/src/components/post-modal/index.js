@@ -1,12 +1,21 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { Modal, Button, Backdrop, Fade, Paper, TextField } from '@material-ui/core';
+import { Modal, Button, Backdrop, Fade, Paper, TextField, Grid, Container } from '@material-ui/core';
 import { UserContext } from '../../contexts/user-context'
+import drooling from '../../assets/drooling.png'
 import styled from 'styled-components';
 
 const PostModal = () => {
     const { user } = useContext(UserContext);
+    const initialFormData = {
+        uid: user.uid,
+        creator: user.nickname,
+        title: '',
+        preview: '',
+        recipe: ''
+    };
     const [isOpen, setIsOpen] = useState(false);
+    const [formData, setFormData] = useState(initialFormData);
 
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -14,6 +23,16 @@ const PostModal = () => {
 
     const handleModalClose = () => {
         setIsOpen(false);
+    }
+
+    const handleFormChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        })
+    }
+
+    const handleSubmit = () => {
     }
 
     return (
@@ -34,7 +53,6 @@ const PostModal = () => {
                             </LoginLink>
                         </ButtonContainer>
                 }
-
             </Fade>
             <RecipeModal
                 open={isOpen}
@@ -46,12 +64,30 @@ const PostModal = () => {
                 }}
             >
                 <Fade in={isOpen}>
-                    <RecipePaper elevation={2}>
-                        <h1>Create your own recipe!</h1>
-                        <form>
-                            woo
-                        </form>
-                    </RecipePaper>
+                    <Container maxWidth='sm'>
+                        <RecipePaper elevation={4}>
+                            <AvatarContainer>
+                                <ModalAvatar src={drooling} />
+                            </AvatarContainer>
+                            <h1>Create a recipe!</h1>
+                            <Form onSubmit={handleSubmit}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} sm={12}>
+                                        <TextField name='title' type='text' variant='outlined' label='Recipe Name' multiline fullWidth required onChange={handleFormChange} />
+                                    </Grid>
+                                    <Grid item xs={12} sm={12}>
+                                        <TextField name='preview' type='text' variant='outlined' label='Recipe Preview' multiline fullWidth required onChange={handleFormChange} />
+                                    </Grid>
+                                    <Grid item xs={12} sm={12}>
+                                        <TextField name='recipe' type='text' variant='outlined' label='Recipe Instructions' multiline fullWidth required onChange={handleFormChange} />
+                                    </Grid>
+                                    <Grid item xs={12} sm={12}>
+                                        <SubmitButton type='submit' fullWidth>Create!</SubmitButton>
+                                    </Grid>
+                                </Grid>
+                            </Form>
+                        </RecipePaper>
+                    </Container>
                 </Fade>
             </RecipeModal>
         </>
@@ -81,15 +117,43 @@ const LoginLink = styled(Link)`
 `
 
 const RecipeModal = styled(Modal)`
-    display: flex;
+    position: absolute;
     align-items: center;
     justify-content: center;
+    overflow: scroll;
+    height: 100%;
+`
+
+const AvatarContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+const ModalAvatar = styled.img`
+    width: 100%;
+    max-width: 50px;
+    height: auto;
+    margin-bottom: 5px;
 `
 
 const RecipePaper = styled(Paper)`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 96px;
+    margin-bottom: 64px;
     padding: 20px;
-    border: 1px solid orange;
 `
 
+const Form = styled.form`
+    margin-top: 10px;
+    width: 100%auto;
+`
+
+const SubmitButton = styled(Button)`
+    color: #fff !important;
+    background-color: #B7AC44 !important;
+`
 
 export default PostModal;
