@@ -43,6 +43,17 @@ const PostModal = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (formData.title.length > 52) {
+            swal('Error', 'Recipe name must be less than 50 characters', 'error');
+            return;
+        }
+
+        if (formData.preview.length > 128) {
+            swal('Error', 'Recipe preview must be less than 128 characters', 'error');
+            return;
+        }
+
         setPostsLoading(true);
         setIsOpen(false);
         try {

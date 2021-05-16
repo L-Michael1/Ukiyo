@@ -5,8 +5,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ukiyo from '../../../assets/ukiyo-food.png'
-import drooling from '../../../assets/drooling-black.png'
 import moment from 'moment'
 import styled from 'styled-components';
 
@@ -40,7 +38,7 @@ const Post = ({ post }) => {
                     title={post.title}
                 />
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography style={{ wordBreak: 'normal' }} variant="body2" color="textSecondary" component="p">
                         {post.preview === '' ? 'Click the arrow to view more about the recipe!' : post.preview}
                     </Typography>
                 </CardContent>
@@ -65,7 +63,7 @@ const Post = ({ post }) => {
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph>Method:</Typography>
-                        <Recipe style={{ whiteSpace: 'pre-wrap' }}>
+                        <Recipe>
                             {post.recipe === '' ? 'No recipe found...:(' : post.recipe}
                         </Recipe>
                     </CardContent>
@@ -92,6 +90,7 @@ const UserAvatar = styled(Avatar)`
 `
 
 const Recipe = styled.pre`
+    word-break: normal;
     white-space: pre-wrap;
     font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 15px;
