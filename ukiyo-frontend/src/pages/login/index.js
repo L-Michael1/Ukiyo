@@ -1,16 +1,18 @@
-import React, { useState, useContext } from 'react'
-import { UserContext } from '../../contexts/user-context'
-import { useHistory, Link } from 'react-router-dom'
-import { signIn } from '../../api'
-import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material-ui/core'
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../../contexts/user-context';
+import { useHistory, Link } from 'react-router-dom';
+import { signIn } from '../../api';
+import { Container, Grid, Paper, TextField, Button, Grow } from '@material-ui/core';
 import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
 import styled from 'styled-components';
-import swal from 'sweetalert'
+import swal from 'sweetalert';
 import UserLoading from '../../components/user-loading';
+import firebase from '../../firebase/firebase';
 
 const Login = () => {
     const history = useHistory();
-    const { user, setUser, userLoading, setUserLoading } = useContext(UserContext);
+    const auth = firebase.auth();
+    const { setUser, userLoading, setUserLoading } = useContext(UserContext);
 
     const initialState = {
         email: '',
@@ -22,7 +24,8 @@ const Login = () => {
         setUserLoading(true);
         try {
             // Store user in local storage for a certain amount of time??
-            const existingUser = await signIn(userInfo);
+            const { user: { uid } } = await auth.signInWithEmailAndPassword(userInfo.email, userInfo.password);
+            const existingUser = await signIn({ uid });
             setUser({
                 uid: existingUser.data.uid,
                 nickname: existingUser.data.nickname,

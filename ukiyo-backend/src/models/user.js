@@ -23,11 +23,6 @@ const userSchema = Schema({
         type: String,
         required: true
     },
-    // Will remove password when refactor firebase
-    password: {
-        type: String,
-        required: true
-    },
     // Favourites to hold recipe ids
     favourites: [String],
 })

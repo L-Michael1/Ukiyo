@@ -7,12 +7,15 @@ import styled from 'styled-components';
 import swal from 'sweetalert'
 import { UserContext } from '../../contexts/user-context'
 import UserLoading from '../../components/user-loading';
+import firebase from '../../firebase/firebase'
 
 const SignUp = () => {
     const history = useHistory();
+    const auth = firebase.auth();
     const { userLoading, setUserLoading } = useContext(UserContext);
 
     const initialState = {
+        uid: '',
         first_name: '',
         last_name: '',
         nickname: '',
@@ -44,7 +47,8 @@ const SignUp = () => {
         }
 
         try {
-            await signUp(userInfo);
+            const { user: { uid } } = await auth.createUserWithEmailAndPassword(userInfo.email, userInfo.password);
+            await signUp({ ...userInfo, uid });
             await swal('Sign up successful', 'You can now log in!', 'success')
             history.push('/signIn')
             setUserLoading(false);
@@ -63,8 +67,6 @@ const SignUp = () => {
     }
 
     const [userInfo, setUserInfo] = useState(initialState);
-
-    console.log(userInfo);
 
     return (
         userLoading ?

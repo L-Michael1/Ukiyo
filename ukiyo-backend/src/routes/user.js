@@ -6,22 +6,13 @@ import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
 import Post from '../models/post.js'
 
-// Auth
-import firebase from '../firebase/firebase.js'
-const auth = firebase.default.auth();
-
 const router = express.Router();
 
 // Create user
 router.post('/', async (req, res, next) => {
-    const { first_name, last_name, nickname, email, password } = req.body;
+    const { uid, first_name, last_name, nickname, email } = req.body;
     try {
-        // Create user in Firebase, Firebase auth will check if user exists
-        const response = await auth.createUserWithEmailAndPassword(email, password);
-        const uid = response.user.uid;
-        // Create and save user to DB
-        const encryptedPassword = await bcrypt.hash(password, 12)
-        await User.create({ uid, first_name, last_name, nickname, email, password: encryptedPassword });
+        await User.create({ uid, first_name, last_name, nickname, email });
         res.status(200).json({ user: { uid, first_name, last_name, nickname, email } });
     } catch (error) {
         res.status(412).json({ message: error.message });
@@ -34,8 +25,9 @@ router.get('/:id', async (req, res, next) => {
     try {
         const user = await User.findOne({ uid });
         if (user) {
-            const { first_name, last_name, nickname, email, password } = user;
-            return res.status(200).json({ user: { uid, first_name, last_name, nickname, email, password } });
+            const { first_name, last_name, nickname, email } = user;
+            return res.status(200).json({ user: { uid, first_name, last_name, nickname, email } });
+
         }
         res.status(404).json({ message: 'User not found' });
     } catch (error) {
@@ -48,11 +40,6 @@ router.patch('/:id', async (req, res, next) => {
     const uid = req.params.id;
     const updatedUser = req.body;
     try {
-        const existingUser = await User.findOne({ uid });
-        const isPasswordMatch = await bcrypt.compare(updatedUser.currentPassword, existingUser.password)
-        if (!isPasswordMatch) {
-            return res.json({ message: 'Invalid password' });
-        }
         const user = await User.findOneAndUpdate({ uid }, updatedUser, { new: true });
 
         // Update posts
@@ -85,17 +72,11 @@ router.delete('/:id', async (req, res, next) => {
 
 // Sign in
 router.post('/signIn', async (req, res, next) => {
-    const { email, password } = req.body;
+    const { uid } = req.body;
     try {
-        const response = await auth.signInWithEmailAndPassword(email, password);
-        const uid = response.user.uid;
         const user = await User.findOne({ uid });
         if (!user) {
             return res.status(200).json({ message: 'User not found' });
-        }
-        const isPasswordMatch = await bcrypt.compare(password, user.password);
-        if (!isPasswordMatch) {
-            return res.status(400).json({ message: 'Invalid credentials' });
         }
         res.status(200).json(user);
     } catch (error) {
