@@ -7,20 +7,24 @@ import { Container, Grid, Paper, TextField, Button, Fade, Grow } from '@material
 import styled from 'styled-components';
 import swal from 'sweetalert'
 import firebase from '../../firebase/firebase';
-import bcrypt from 'bcryptjs';
 
 const Profile = () => {
 
+    const auth = firebase.auth();
     const history = useHistory();
     const { user, setUser } = useContext(UserContext);
 
     const initialState = {
         nickname: user.nickname,
-        currentPassword: '',
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (userInfo.nickname.length > 10) {
+            swal('Error', 'Nickname has a maximum of 10 characters!', 'error');
+            return;
+        }
 
         try {
             const updatedUser = await updateUser(user.uid, userInfo);
@@ -41,23 +45,14 @@ const Profile = () => {
         }
     }
 
-    // const handleResetPassword = async () => {
-    //     getUser(user.uid).then(async (res, req) => {
-    //         const passwordMatch = await bcrypt.compare(userInfo.currentPassword, res.data.user.password);
-    //         if (passwordMatch) {
-    //             firebase.auth().sendPasswordResetEmail(user.email).then(() => {
-    //                 console.log('hey');
-    //                 swal('Success', 'Password reset email sent!', 'success');
-    //             }).catch(err => {
-    //                 swal('Error', 'Unable to send email at the moment...Try again later', 'error');
-    //             })
-    //             console.log('reset password')
-    //         } else {
-    //             swal('Error', 'Invalid password', 'error');
-    //             return;
-    //         }
-    //     })
-    // }
+    const handleResetPassword = () => {
+        auth.sendPasswordResetEmail(user.email).then(() => {
+            swal('Success', 'Check your email to reset your password', 'success');
+        }).catch(err => {
+            console.error(err);
+            swal('Error', 'Something went wrong, try again later...', 'error');
+        })
+    }
 
     const handleChange = (e) => {
         setUserInfo({
@@ -83,21 +78,21 @@ const Profile = () => {
                     <Form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={12}>
-                                <TextField name='nickname' type='text' variant='outlined' label='Profile Name' value={userInfo.nickname} fullWidth required onChange={handleChange} />
+                                <TextField type='text' variant='outlined' label='Email' value={user.email} fullWidth disabled />
                             </Grid>
                             <Grid item xs={12} sm={12}>
-                                <TextField name='currentPassword' type='password' variant='outlined' label='Current Password' fullWidth required onChange={handleChange} />
+                                <TextField name='nickname' type='text' variant='outlined' label='Profile Name' value={userInfo.nickname} fullWidth required onChange={handleChange} />
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
                                     Submit Changes
                                 </Button>
                             </Grid>
-                            {/* <Grid item xs={12} sm={12}>
+                            <Grid item xs={12} sm={12}>
                                 <Button fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }} onClick={handleResetPassword}>
                                     Reset Password
                                 </Button>
-                            </Grid> */}
+                            </Grid>
                         </Grid>
                     </Form>
                 </StyledPaper>
