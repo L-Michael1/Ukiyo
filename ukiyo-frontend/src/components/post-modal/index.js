@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, Button, Backdrop, Fade, Paper, TextField, Grid, Container } from '@material-ui/core';
+import { DropzoneArea } from 'material-ui-dropzone';
 import { UserContext } from '../../contexts/user-context';
 import { PostsContext } from '../../contexts/posts-context';
 import { createPost, getPosts } from '../../api';
@@ -24,6 +25,7 @@ const PostModal = () => {
     };
     const [isOpen, setIsOpen] = useState(false);
     const [formData, setFormData] = useState(JSON.parse(localStorage.getItem('recipe')) || initialFormData);
+    const imgRef = useRef(null);
 
     const handleModalOpen = () => {
         setIsOpen(true);
@@ -41,9 +43,11 @@ const PostModal = () => {
         localStorage.setItem('recipe', JSON.stringify(formData));
     }
 
+    console.log(formData);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log(imgRef.current);
         if (formData.title.length > 52) {
             swal('Error', 'Recipe name must be less than 50 characters', 'error');
             return;
@@ -109,7 +113,7 @@ const PostModal = () => {
                                 <ModalAvatar src={drooling} />
                             </AvatarContainer>
                             <h1>Create a recipe!</h1>
-                            <Form onSubmit={handleSubmit}>
+                            <Form onSubmit={handleSubmit} encType='multipart/form-data'>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={12}>
                                         <TextField name='title' type='text' variant='outlined' label='Recipe Name' value={formData.title} multiline fullWidth required onChange={handleFormChange} />
@@ -122,12 +126,19 @@ const PostModal = () => {
                                     </Grid>
                                     <Grid item xs={12} sm={12}>
                                         <div>
-                                            <FileBase
+                                            {/* <FileBase
                                                 type='file'
                                                 multiple={false}
                                                 onDone={({ base64 }) => {
                                                     setFormData({ ...formData, picture: base64 })
                                                 }}
+                                            /> */}
+                                            {/* <RecipeImgInput ref={imgRef} id='file-upload' type='file' name='recipeImg' size='100' /> */}
+                                            <DropzoneArea
+                                                acceptedFiles={['image/*']}
+                                                filesLimit={1}
+                                                dropzoneText={"Drag and drop an image here or click"}
+                                                onChange={(file) => setFormData({ ...formData, picture: file })}
                                             />
                                         </div>
                                     </Grid>
@@ -163,7 +174,6 @@ const ModalButton = styled(Button)`
     }
     
 `
-
 const LoginButton = styled(Button)`
     background-color: #FF8300 !important;
     color: #fff !important;
@@ -212,6 +222,18 @@ const RecipePaper = styled(Paper)`
 const Form = styled.form`
     margin-top: 10px;
     width: 100%auto;
+`
+
+// const ImgLabel = styled.label`
+//     border: 1px solid #ccc;
+//     display: flex;
+//     justify-content: center;
+//     padding: 6px 12px;
+//     cursor: pointer;
+// `
+
+const RecipeImgInput = styled.input`
+    /* display: none; */
 `
 
 const SubmitButton = styled(Button)`

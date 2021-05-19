@@ -39,7 +39,19 @@ const Navbar = () => {
 
                 <LogoLink to='/'>
                     <LogoContainer>
-                        <Header>Ukiyo</Header>
+                        <Header>U</Header>
+                    </LogoContainer>
+                    <LogoContainer>
+                        <Header>k</Header>
+                    </LogoContainer>
+                    <LogoContainer>
+                        <Header>i</Header>
+                    </LogoContainer>
+                    <LogoContainer>
+                        <Header>y</Header>
+                    </LogoContainer>
+                    <LogoContainer>
+                        <Header>o</Header>
                     </LogoContainer>
                 </LogoLink>
 
@@ -75,8 +87,8 @@ const NavContainer = styled.div`
 `
 
 const LogoContainer = styled.div`
-    margin: 2px;
-    transition: all 0.4s ease 0s;
+    margin: 3px;
+    transition: all 0.2s ease 0s;
 
     &:hover {
         transform: translateY(-4px);
@@ -84,6 +96,7 @@ const LogoContainer = styled.div`
 `
 
 const LogoLink = styled(Link)`
+    display: flex;
     text-decoration: none;
     color: black;
 `
@@ -126,6 +139,13 @@ const UsernameLink = styled(Link)`
     font-size: 16px;
     font-weight: 600;
     padding-top: 12px;
+
+    transition: all 0.3s ease 0s;
+
+    &:hover {
+        color: #fc8c32;
+        transform: translateY(-2px);
+    }
 `
 
 const LogoutButton = styled(Button)`
