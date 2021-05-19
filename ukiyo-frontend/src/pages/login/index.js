@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import swal from 'sweetalert';
 import UserLoading from '../../components/user-loading';
 import firebase from '../../firebase/firebase';
+import { setUserWithExpiry } from '../../global';
 
 const Login = () => {
     const history = useHistory();
@@ -31,11 +32,11 @@ const Login = () => {
                 nickname: existingUser.data.nickname,
                 email: existingUser.data.email,
             });
-            localStorage.setItem('user', JSON.stringify({
+            setUserWithExpiry({
                 uid: existingUser.data.uid,
                 nickname: existingUser.data.nickname,
-                email: existingUser.data.email,
-            }));
+                email: existingUser.data.email
+            })
             setUserLoading(false);
             history.push('/')
         } catch (error) {

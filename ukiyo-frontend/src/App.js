@@ -12,6 +12,7 @@ import ForgotPasswordPage from './pages/forgotPassword'
 
 // Components
 import PrivateRoute from './components/privateRoute';
+import swal from 'sweetalert';
 
 // Contexts
 import { UserContext } from './contexts/user-context';
@@ -19,6 +20,7 @@ import { PostsContext } from './contexts/posts-context';
 
 // API
 import { getPosts } from './api';
+import { getUserWithExpiry } from './global';
 
 const App = () => {
 
@@ -28,7 +30,7 @@ const App = () => {
     email: ''
   }
 
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || initialUserState);
+  const [user, setUser] = useState(getUserWithExpiry());
 
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(false);
@@ -49,6 +51,13 @@ const App = () => {
   useEffect(() => {
     fetchPosts();
   }, [user.nickname])
+
+  useEffect(() => {
+    if (getUserWithExpiry().uid === '') {
+      setUser(initialUserState);
+      swal('You have been logged out', 'Log back in to continue', 'warning')
+    }
+  }, [localStorage.getItem('user')])
 
   return (
     <Router>
