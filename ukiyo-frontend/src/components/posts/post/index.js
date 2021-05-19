@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Typography } from '@material-ui/core';
+import { makeStyles, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Typography, Fade } from '@material-ui/core';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -18,58 +18,60 @@ const Post = ({ post }) => {
 
     if (post) {
         return (
-            <RecipeCard>
-                <CardHeader
-                    style={{ minHeight: '55px', maxHeight: '55px' }}
-                    avatar={
-                        <UserAvatar aria-label="recipe">
-                            {post.creator.charAt(0)}
-                        </UserAvatar>
-                    }
-                    action={
-                        <IconButton aria-label="settings">
-                            <MoreVertIcon />
-                        </IconButton>
-                    }
-                    title={post.title}
-                    subheader={`${moment(post.createdAt).fromNow()} by ${post.creator}`}
-                />
-                <MediaCard
-                    image={post.picture}
-                    title={post.title}
-                />
-                <CardContent style={{ maxHeight: '40px', minHeight: '40px' }}>
-                    <Typography style={{ wordBreak: 'normal' }} variant="body2" color="textSecondary" component="p">
-                        {post.preview === '' ? 'Click the arrow to view more about the recipe!' : post.preview}
-                    </Typography>
-                </CardContent>
-                <RecipeActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                        <ShareIcon />
-                    </IconButton>
-                    <IconButton
-                        className={clsx(classes.expand, {
-                            [classes.expandOpen]: expanded,
-                        })}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                    >
-                        <ExpandMoreIcon />
-                    </IconButton>
-                </RecipeActions>
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph>Method:</Typography>
-                        <Recipe>
-                            {post.recipe === '' ? 'No recipe found...:(' : post.recipe}
-                        </Recipe>
+            <Fade in timeout={{ enter: 7000, exit: 3500 }}>
+                <RecipeCard>
+                    <CardHeader
+                        style={{ minHeight: '55px', maxHeight: '55px' }}
+                        avatar={
+                            <UserAvatar aria-label="recipe">
+                                {post.creator.charAt(0)}
+                            </UserAvatar>
+                        }
+                        action={
+                            <IconButton aria-label="settings">
+                                <MoreVertIcon />
+                            </IconButton>
+                        }
+                        title={post.title}
+                        subheader={`${moment(post.createdAt).fromNow()} by ${post.creator}`}
+                    />
+                    <MediaCard
+                        image={post.picture}
+                        title={post.title}
+                    />
+                    <CardContent style={{ maxHeight: '40px', minHeight: '40px' }}>
+                        <Typography style={{ wordBreak: 'normal' }} variant="body2" color="textSecondary" component="p">
+                            {post.preview === '' ? 'Click the arrow to view more about the recipe!' : post.preview}
+                        </Typography>
                     </CardContent>
-                </Collapse>
-            </RecipeCard>
+                    <RecipeActions disableSpacing>
+                        <IconButton aria-label="add to favorites">
+                            <FavoriteIcon />
+                        </IconButton>
+                        <IconButton aria-label="share">
+                            <ShareIcon />
+                        </IconButton>
+                        <IconButton
+                            className={clsx(classes.expand, {
+                                [classes.expandOpen]: expanded,
+                            })}
+                            onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more"
+                        >
+                            <ExpandMoreIcon />
+                        </IconButton>
+                    </RecipeActions>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <Typography paragraph>Method:</Typography>
+                            <Recipe>
+                                {post.recipe === '' ? 'No recipe found...:(' : post.recipe}
+                            </Recipe>
+                        </CardContent>
+                    </Collapse>
+                </RecipeCard>
+            </Fade>
         );
     } else {
         return null;

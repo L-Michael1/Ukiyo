@@ -34,6 +34,8 @@ const App = () => {
 
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage, setPostsPerPage] = useState(5);
   const [userLoading, setUserLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -52,6 +54,12 @@ const App = () => {
     fetchPosts();
   }, [user.nickname])
 
+  // Get page + indices of posts to display...ex. 5-10
+  const lastPostIdx = currentPage * postsPerPage;
+  const firstPostIdx = lastPostIdx - postsPerPage;
+  const currentPosts = posts.slice(firstPostIdx, lastPostIdx);
+  const totalPosts = posts.length;
+
   useEffect(() => {
     if (getUserWithExpiry().uid === '') {
       setUser(initialUserState);
@@ -59,11 +67,13 @@ const App = () => {
     }
   }, [localStorage.getItem('user')])
 
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <Router>
       <Switch>
         <UserContext.Provider value={{ user, setUser, userLoading, setUserLoading }}>
-          <PostsContext.Provider value={{ posts, setPosts, postsLoading, setPostsLoading, error, setError }}>
+          <PostsContext.Provider value={{ currentPosts, postsPerPage, totalPosts, paginate, setPosts, postsLoading, setPostsLoading, error, setError }}>
             <PrivateRoute path='/Profile' component={ProfilePage} />
             <Route exact path='/SignUp' component={SignUpPage} />
             <Route exact path='/SignIn' component={SignInPage} />

@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 
 const Posts = () => {
     const classes = useStyles();
-    const { posts, postsLoading, error } = useContext(PostsContext);
+    const { currentPosts, postsLoading, error } = useContext(PostsContext);
     return (
         postsLoading ?
             <CircularProgress className={classes.loading} color='secondary' size={80} thickness={1.8} />
@@ -33,7 +33,8 @@ const Posts = () => {
 
                 <Grow in={true} timeout={{ enter: 1800, exit: 1000 }}>
                     <Container container justify='center' >
-                        {posts.map((post) => {
+                        {console.log(currentPosts)}
+                        {currentPosts.map((post) => {
                             return (
                                 <Grid item key={post._id}>
                                     <Post post={post} />

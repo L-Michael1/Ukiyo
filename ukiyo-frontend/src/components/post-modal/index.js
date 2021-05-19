@@ -43,8 +43,6 @@ const PostModal = () => {
         localStorage.setItem('recipe', JSON.stringify(formData));
     }
 
-    console.log(formData);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(imgRef.current);

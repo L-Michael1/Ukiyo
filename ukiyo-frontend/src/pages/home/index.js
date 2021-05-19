@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar'
 import PostModal from '../../components/post-modal'
 import Posts from '../../components/posts';
 import Footer from '../../components/footer'
+import RecipePagination from '../../components/pagination';
 
 const Home = () => {
     return (
@@ -11,6 +12,7 @@ const Home = () => {
             <Navbar />
             <PostModal />
             <Posts />
+            <RecipePagination />
             <Footer />
         </Container>
     )
