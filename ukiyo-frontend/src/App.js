@@ -8,6 +8,7 @@ import HomePage from './pages/home';
 import SignUpPage from './pages/signup';
 import SignInPage from './pages/login';
 import ProfilePage from './pages/profile';
+import ForgotPasswordPage from './pages/forgotPassword'
 
 // Components
 import PrivateRoute from './components/privateRoute';
@@ -28,7 +29,6 @@ const App = () => {
   }
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || initialUserState);
-  console.log(user);
 
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(false);
@@ -58,6 +58,7 @@ const App = () => {
             <PrivateRoute path='/Profile' component={ProfilePage} />
             <Route exact path='/SignUp' component={SignUpPage} />
             <Route exact path='/SignIn' component={SignInPage} />
+            <Route exact path='/ForgotPassword' component={ForgotPasswordPage} />
             <Route exact path='/' component={HomePage} />
           </PostsContext.Provider>
         </UserContext.Provider>

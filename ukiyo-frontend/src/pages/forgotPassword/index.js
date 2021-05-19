@@ -1,62 +1,40 @@
 import React, { useState, useContext } from 'react';
-import { UserContext } from '../../contexts/user-context';
-import { useHistory, Link } from 'react-router-dom';
-import { signIn } from '../../api';
+import { Link } from 'react-router-dom';
 import { Container, Grid, Paper, TextField, Button, Grow } from '@material-ui/core';
-import VpnKeyOutlinedIcon from '@material-ui/icons/VpnKeyOutlined';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import styled from 'styled-components';
-import swal from 'sweetalert';
-import UserLoading from '../../components/user-loading';
+import { UserContext } from '../../contexts/user-context';
 import firebase from '../../firebase/firebase';
+import swal from 'sweetalert'
+import UserLoading from '../../components/user-loading';
 
-const Login = () => {
-    const history = useHistory();
+const ForgotPassword = () => {
+
     const auth = firebase.auth();
-    const { setUser, userLoading, setUserLoading } = useContext(UserContext);
+    const { userLoading, setUserLoading } = useContext(UserContext);
+    const [email, setEmail] = useState('');
 
-    const initialState = {
-        email: '',
-        password: '',
+    const handleChange = e => {
+        setEmail(e.target.value)
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUserLoading(true);
         try {
-            // Store user in local storage for a certain amount of time??
-            const { user: { uid } } = await auth.signInWithEmailAndPassword(userInfo.email, userInfo.password);
-            const existingUser = await signIn({ uid });
-            setUser({
-                uid: existingUser.data.uid,
-                nickname: existingUser.data.nickname,
-                email: existingUser.data.email,
-            });
-            localStorage.setItem('user', JSON.stringify({
-                uid: existingUser.data.uid,
-                nickname: existingUser.data.nickname,
-                email: existingUser.data.email,
-            }));
-            setUserLoading(false);
-            history.push('/')
+            await auth.sendPasswordResetEmail(email);
+            swal('Success', 'Check your email to reset your password', 'success');
         } catch (error) {
-            swal('Error signing in', 'Something went wrong! Check credentials or try again later...', 'error')
-            console.error(error.message)
+            swal('Error', 'Email is not registered in our system...', 'error');
         }
         setUserLoading(false);
     }
 
-    const handleChange = (e) => {
-        setUserInfo({
-            ...userInfo,
-            [e.target.name]: e.target.value,
-        })
-    }
-
-    const [userInfo, setUserInfo] = useState(initialState);
-
     return (
-        userLoading ?
-            <UserLoading /> :
+        userLoading
+            ?
+            <UserLoading />
+            :
             <Grow in={true} timeout={{ enter: 1200, exit: 1000 }} >
                 <Container maxWidth='xs'>
                     <HeaderLink to='/'>
@@ -66,38 +44,29 @@ const Login = () => {
                         </HeaderContainer>
                     </HeaderLink>
                     <StyledPaper elevation={4}>
-                        <VpnKeyOutlinedIcon fontSize='large' style={{ color: '#f4a261' }} />
-                        <SubHeader>Sign In</SubHeader>
+                        <LockOpenIcon fontSize='large' style={{ color: '#f4a261' }} />
+                        <SubHeader>Password</SubHeader>
+                        <SubHeader>Reset</SubHeader>
                         <Form onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={12}>
                                     <TextField name='email' type='email' variant='outlined' label='Email Address' fullWidth required onChange={handleChange} />
                                 </Grid>
                                 <Grid item xs={12} sm={12}>
-                                    <TextField name='password' type='password' variant='outlined' label='Password' fullWidth required onChange={handleChange} />
-                                </Grid>
-                                <Grid item xs={12} sm={12}>
                                     <Button type='submit' fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
-                                        Login
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={12} sm={12}>
-                                    <StyledLink to='/ForgotPassword'>
-                                        <Button fullWidth style={{ color: '#fff', backgroundColor: '#f4a261' }}>
-                                            Forgot Password
-                                        </Button>
-                                    </StyledLink>
+                                        Reset
+                                </Button>
                                 </Grid>
                                 <Grid item xs={12} sm={12}>
                                     <StyledLink to='/SignUp'>
                                         Don't have an account? Sign up!
-                                    </StyledLink>
+                                </StyledLink>
                                 </Grid>
                             </Grid>
                         </Form>
                     </StyledPaper>
                 </Container>
-            </Grow>
+            </Grow >
     )
 }
 
@@ -153,4 +122,4 @@ const StyledLink = styled(Link)`
     justify-content: center;
 `
 
-export default Login;
+export default ForgotPassword;
